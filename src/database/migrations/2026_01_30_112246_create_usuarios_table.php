@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nick',20)->unique();
             $table->string('nombre',20);
             $table->string('apellidos',50)->nullable();
-            $table->string('password',64);
+            $table->string('password',255);
+            $table->string('remember_token',100)->nullable();
             $table->string('email',50)->unique();
             $table->integer('karma')->default(0);
             $table->string('avatar',300)->nullable();

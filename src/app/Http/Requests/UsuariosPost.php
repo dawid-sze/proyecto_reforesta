@@ -31,4 +31,10 @@ class UsuariosPost extends FormRequest
             'avatar' => 'string|max:300'
         ];
     }
+    public function messages(){
+        [
+            'nick.required' => 'El nick es obligatorio',
+            'nick.string' => 'El '
+        ]
+    }
 }
