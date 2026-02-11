@@ -12,7 +12,9 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $contactos = Usuarios::all();
+
+        return view('usuarios.index', compact('contactos'));
     }
 
     /**
@@ -20,7 +22,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route(usuarios.create);
     }
 
     /**
