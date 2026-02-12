@@ -12,9 +12,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        $contactos = Usuarios::all();
-
-        return view('usuarios.index', compact('contactos'));
+        
     }
 
     /**
