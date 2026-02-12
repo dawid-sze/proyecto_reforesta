@@ -32,9 +32,16 @@ class UsuariosPost extends FormRequest
         ];
     }
     public function messages(){
-        [
+      return  [
             'nick.required' => 'El nick es obligatorio',
-            'nick.string' => 'El '
-        ]
+            'nick.max' => 'El nick no puede superar los 20 carácteres',
+            'nombre.requiered' => 'El nombre es obligatorio',
+            'nombre.max' => 'El nombre no puede superar los 20 carácteres',
+            'apellidos.max' => 'El apellido no puede superar los 50 carácteres',
+            'password.requiered' => 'La contraseña es obligatoria',
+            'password.max' => 'La contraseña no puede superar los 64 carácteres',
+            'email.max' => 'El email no puede superar los 50 carácteres',
+            'avartar.max' => 'El avatar no puede superar los 300 carácteres'
+      ];
     }
 }
