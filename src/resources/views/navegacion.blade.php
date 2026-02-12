@@ -1,3 +1,7 @@
 <div>
-    <!-- Let all your things have their places; let each part of your business have its time. - Benjamin Franklin -->
+   <a href="url{{ '/' }}">Inicio</a>
+   <a href="url{{ '/especies' }}">Especies</a>
+   <a href="url{{ '/usuarios/create' }}">Registro</a>
+   <a href="url{{ 'login' }}">Login</a>
+   <a href="url{{ 'eventos/create/' }}">Crear Eventos</a>
 </div>

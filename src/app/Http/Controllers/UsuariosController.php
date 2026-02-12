@@ -12,9 +12,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        $contactos = Usuarios::all();
-
-        return view('usuarios.index', compact('contactos'));
+        
     }
 
     /**
@@ -22,7 +20,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        return redirect()->route(usuarios.create);
+        return view('usuarios.create');
     }
 
     /**
@@ -30,38 +28,65 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuario = Usuarios::create([
+            'nick'=>$request->nick,
+            'nombre'=>$request->nombre,
+            'apellidos'=>$request->apellidos,
+            'password'=>$request->password,
+            'email'=>$request->email,
+            'avatar'=>$request->avatar
+        ]);
+
+        return redirect()->route('usuarios.show',$usuario->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Usuarios $usuarios)
+    public function show(string $id)
     {
-        //
+        $usuario = Usuarios::findOrFail($id);
+
+        return view('usuarios.show', 'usuario');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Usuarios $usuarios)
+    public function edit(string $id)
     {
-        //
+        $usuario = Usuarios::findOrFail($id);
+
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Usuarios $usuarios)
+    public function update(Request $request, string $id)
     {
-        //
+        $usuario = Usuarios::findOrFail($id);
+
+        $usuario->edit([
+            'nick'=>$request->nick,
+            'nombre'=>$request->nombre,
+            'apellidos'=>$request->apellidos,
+            'password'=>$request->password,
+            'email'=>$request->email,
+            'avatar'=>$request->avatar
+        ]);
+        return redirect()->route('usuarios.show', $usuario-id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Usuarios $usuarios)
+    public function destroy(string $id)
     {
-        //
+        $usuario = Usuarios::findOrFail($id);
+
+        $usuario->delete();
+
+        return redirect()->route('inicio');
     }
 }

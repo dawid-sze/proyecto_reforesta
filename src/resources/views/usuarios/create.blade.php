@@ -1,4 +1,5 @@
 <div>
+
     <form action="" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="nick">Nick:</label>
@@ -45,3 +46,4 @@
         <input type="submit" value="Registrarse">
     </form>
 </div>
+

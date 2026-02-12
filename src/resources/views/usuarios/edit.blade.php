@@ -1,4 +1,5 @@
 <div>
+
     <form action="contactos.update" method="POST">
         @csrf
         @method('PUT')
@@ -12,3 +13,4 @@
         <input type="submit" value="Cambiar Avatar">
     </form>
 </div>
+
