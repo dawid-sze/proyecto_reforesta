@@ -12,7 +12,9 @@ class EspeciesController extends Controller
      */
     public function index()
     {
-        //
+        $especies = Especies::all();
+
+        return view('especies.index',compact('especies'));
     }
 
     /**
@@ -34,9 +36,11 @@ class EspeciesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Especies $especies)
+    public function show(string $id)
     {
-        //
+        $especie = Especies::findOrFail($id);
+
+        return view('especies.show', compact('especie'));
     }
 
     /**

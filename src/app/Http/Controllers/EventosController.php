@@ -12,7 +12,9 @@ class EventosController extends Controller
      */
     public function index()
     {
-        //
+         $eventos = Eventos::all();
+
+        return view('inicio', compact('eventos'));
     }
 
     /**
@@ -20,7 +22,7 @@ class EventosController extends Controller
      */
     public function create()
     {
-        //
+       return view('eventos.create');
     }
 
     /**
@@ -28,38 +30,66 @@ class EventosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $evento = Eventos::create([
+            'nombre'=>$request->nombre,
+            'tipo_evento'=>$request->tipo_evento,
+            'tipo_terreno'=>$request->tipo_terreno,
+            'ubicacion'=>$request->ubicacion,
+            'fecha'=>$request->fecha,
+            'descripcion'=>$request->descripcion,
+            'imagen'=>$request->imagen
+        ]);
+
+        return redirect()->route('eventos.show', $evento->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Eventos $eventos)
+    public function show(string $id)
     {
-        //
+        $evento = Eventos::findOrFail($id);
+
+        return view('eventos.show', compact('evento'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Eventos $eventos)
+    public function edit(string $id)
     {
-        //
+        $evento = Eventos::findOrFail($id);
+
+        return view('eventos.edit', 'evento');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Eventos $eventos)
+    public function update(Request $request, string $id)
     {
-        //
+        $evento = Eventos::findOrFail($id);
+        $evento->edit([
+            'nombre'=>$request->nombre,
+            'tipo_evento'=>$request->tipo_evento,
+            'tipo_terreno'=>$request->tipo_terreno,
+            'ubicacion'=>$request->ubicacion,
+            'fecha'=>$request->fecha,
+            'descripcion'=>$request->descripcion,
+            'imagen'=>$request->imagen
+        ]);
+
+        return redirect()->route('eventos.show', $evento->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Eventos $eventos)
+    public function destroy(string $id)
     {
-        //
+        $evento = Eventos::findOrFail($id);
+        $evento->delete();
+
+        return redirect()->route('eventos.index');
     }
 }
