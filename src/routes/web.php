@@ -12,3 +12,5 @@ Route::get('/', function () {
 Route::resource('usuarios',UsuariosController::class);
 Route::resource('especies',EspeciesController::class);
 Route::resource('eventos',EventosController::class);
+Route::get('login', [UsuariosController::class, 'loginForm'])->name('login');
+Route::get('login', [UsuariosController::class, 'login']);
