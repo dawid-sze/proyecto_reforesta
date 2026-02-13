@@ -48,7 +48,7 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        $evento = Eventos::findOrFail($id);
+        $evento = Eventos::findOrFail($id)->load('anfitrion');
 
         return view('eventos.show', compact('evento'));
     }
@@ -60,7 +60,7 @@ class EventosController extends Controller
     {
         $evento = Eventos::findOrFail($id);
 
-        return view('eventos.edit', 'evento');
+        return view('eventos.edit', compact('evento'));
     }
 
     /**
@@ -92,4 +92,6 @@ class EventosController extends Controller
 
         return redirect()->route('eventos.index');
     }
+
+    
 }

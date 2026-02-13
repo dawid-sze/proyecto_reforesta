@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class UsuariosController extends Controller
 {
     /**
@@ -45,9 +46,9 @@ class UsuariosController extends Controller
      */
     public function show(string $id)
     {
-        $usuario = Usuarios::findOrFail($id);
+        $usuario = Usuarios::findOrFail($id)->load(['hospeda', 'usuarios_eventos']);
 
-        return view('usuarios.show', 'usuario');
+        return view('usuarios.show', compact('usuario'));
     }
 
     /**
@@ -88,5 +89,20 @@ class UsuariosController extends Controller
         $usuario->delete();
 
         return redirect()->route('inicio');
+    }
+
+    public function loginForm(){
+        return view('auth.login');
+    }
+
+    public function login(Request $request){
+        $credenciales = $request->only('email','password');
+
+        if(Auth::attempt($credenciales)){
+            return redirect()->intended(route('inicio'));
+        }else{
+            $error = 'Usuario incorrecto';
+            return view('auth.login', compact('error'));
+        }
     }
 }
