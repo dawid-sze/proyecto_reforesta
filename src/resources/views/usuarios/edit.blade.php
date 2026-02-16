@@ -5,7 +5,7 @@
         @method('PUT')
         
         <label for="avatar">Nuevo avatar:</label>
-        <input type="file" name="avatar" id=""><br>
+        <input type="file" name="avatar" id="" value="{{ old('avatar') !== null ? old('avatar') : $contacto->avatar }}"><br>
         @error('avatar')
             <span>{{ $message }}</span>
         @enderror
