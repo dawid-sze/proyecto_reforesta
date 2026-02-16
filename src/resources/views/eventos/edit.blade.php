@@ -3,13 +3,13 @@
         @csrf
         @method("PUT")
         <label for="fecha">Fecha del evento: </label>
-        <input type="date" name="fecha" id="" value="{{ old('fecha') !== null ? old('fecha')  : $evento->imagen }}"><br>
+        <input type="date" name="fecha" id="" value="{{ old('fecha') !== null ? old('fecha')  : $evento->fecha }}"><br>
         @error('fecha')
             <span>{{ $message }}</span>
         @enderror
         <br>
-        <label for="descripcion">Descripción del evento: </label>
-        <input type="text" name="descripcion" id="" value="{{ old('descripcion') !== null ? old('descripcion')  : $evento->imagen }}"><br>
+        <label for="descripcion">Descripción del evento: </label><br>
+        <textarea name="descripcion" id="">{{ old('descripcion') !== null ? old('descripcion')  : $evento->descripcion }}</textarea><br>
         @error('descripcion')
             <span>{{ $message }}</span>
         @enderror

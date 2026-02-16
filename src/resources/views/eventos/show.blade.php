@@ -7,5 +7,5 @@
     <h3>{{ $evento->anfitrion->nombre }}</h3>
     <h3>{{ $evento->descripcion }}</h3>
     <img src="{{ $evento->imagen }}" alt="">
-    <a href="eventos/{{ $evento->id }}/edit"><button>Editar evento</button></a>
+    <a href="{{ $evento->id }}/edit"><button>Editar evento</button></a>
 </div>

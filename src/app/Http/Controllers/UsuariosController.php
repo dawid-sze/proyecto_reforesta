@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsuariosPost;
 use App\Models\Usuarios;
 
 use Illuminate\Http\Request;
@@ -13,7 +14,9 @@ class UsuariosController extends Controller
      */
     public function index()
     {
+        $usuarios = Usuarios::all();
         
+        return view ("usuarios.index", compact('usuarios'));
     }
 
     /**
@@ -27,13 +30,13 @@ class UsuariosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UsuariosPost $request)
     {
         $usuario = Usuarios::create([
             'nick'=>$request->nick,
             'nombre'=>$request->nombre,
             'apellidos'=>$request->apellidos,
-            'password'=>$request->password,
+            'password'=>bcrypt($request->password),
             'email'=>$request->email,
             'avatar'=>$request->avatar
         ]);
@@ -46,7 +49,7 @@ class UsuariosController extends Controller
      */
     public function show(string $id)
     {
-        $usuario = Usuarios::findOrFail($id)->load(['hospeda', 'usuarios_eventos']);
+        $usuario = Usuarios::findOrFail($id)->load(['hospeda', 'usuariosEventos']);
 
         return view('usuarios.show', compact('usuario'));
     }
@@ -64,7 +67,7 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UsuariosPost $request, string $id)
     {
         $usuario = Usuarios::findOrFail($id);
 
@@ -72,7 +75,7 @@ class UsuariosController extends Controller
             'nick'=>$request->nick,
             'nombre'=>$request->nombre,
             'apellidos'=>$request->apellidos,
-            'password'=>$request->password,
+            'password'=>bcrypt($request->password),
             'email'=>$request->email,
             'avatar'=>$request->avatar
         ]);
@@ -95,7 +98,7 @@ class UsuariosController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request){
+    public function login(UsuariosPost $request){
         $credenciales = $request->only('email','password');
 
         if(Auth::attempt($credenciales)){

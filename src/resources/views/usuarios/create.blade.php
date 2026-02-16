@@ -1,7 +1,8 @@
 <div>
 
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('POST')
         <label for="nick">Nick:</label>
         <input type="text" name="nick" id="" value="{{ old('nick') }}"><br>
         @error('nick')

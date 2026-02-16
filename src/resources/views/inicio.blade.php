@@ -1,0 +1,22 @@
+<div>
+    @include('navegacion')
+    @if ($eventos->isEmpty())
+        <p>No hay eventos</p>
+    @else
+        @foreach ($eventos as $evento)
+            <article>
+                <h1>{{ $evento->nombre }} </h1>
+                <p>{{ $evento->ubicacion }}</p>
+                <!-- Mirar a ver como llamamos el nombre del anfitrion -->
+                 <p>{{ $evento->tipo_evento }}</p>
+                 <a href="eventos/ {{ $evento->id }}"><button>Ver detalles</button></a>
+                 <a href="eventos/ {{ $evento->id }}/edit"><button>Modificar evento</button></a>
+                 <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit" onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
+                 </form>
+            </article> 
+        @endforeach
+    @endif
+</div>
