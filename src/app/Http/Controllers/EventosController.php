@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventosPost;
 use App\Models\Eventos;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class EventosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EventosPost $request)
     {
         $evento = Eventos::create([
             'nombre'=>$request->nombre,
@@ -66,7 +67,7 @@ class EventosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EventosPost $request, string $id)
     {
         $evento = Eventos::findOrFail($id);
         $evento->edit([

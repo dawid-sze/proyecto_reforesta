@@ -35,12 +35,18 @@ class UsuariosPost extends FormRequest
       return  [
             'nick.required' => 'El nick es obligatorio',
             'nick.max' => 'El nick no puede superar los 20 carácteres',
-            'nombre.requiered' => 'El nombre es obligatorio',
+            'nick.string' => 'El nick no puede estar vacío',
+            'nombre.required' => 'El nombre es obligatorio',
             'nombre.max' => 'El nombre no puede superar los 20 carácteres',
+            'nombre.string' => 'El nombre no puede estar vacío',
             'apellidos.max' => 'El apellido no puede superar los 50 carácteres',
-            'password.requiered' => 'La contraseña es obligatoria',
+            'apellidos.string' => 'Apellidos no puede estar vacío',
+            'password.required' => 'La contraseña es obligatoria',
             'password.max' => 'La contraseña no puede superar los 64 carácteres',
+            'password.string' => 'El password no puede estar vacío',
             'email.max' => 'El email no puede superar los 50 carácteres',
+            'email.string' => 'El email no puede estar vacío',
+            'email.required' => 'El email es obligatorio',
             'avartar.max' => 'El avatar no puede superar los 300 carácteres'
       ];
     }

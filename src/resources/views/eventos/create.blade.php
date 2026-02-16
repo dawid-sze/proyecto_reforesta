@@ -1,6 +1,7 @@
 <div>
-    <form action="" method="POST">
+    <form action="{{ route('eventos.store') }}" method="POST">
         @csrf
+        @method('POST')
         <label for="nombre">Nombre del evento:</label>
         <input type="text" name="nombre" id="" value="{{ old('nombre') }}"><br>
         @error('nombre')
