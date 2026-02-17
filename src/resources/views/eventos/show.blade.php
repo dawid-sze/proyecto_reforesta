@@ -7,5 +7,7 @@
     <h3>{{ $evento->anfitrion->nombre }}</h3>
     <h3>{{ $evento->descripcion }}</h3>
     <img src="{{ $evento->imagen }}" alt="">
-    <a href="{{ $evento->id }}/edit"><button>Editar evento</button></a>
+    @if (auth()->check() && auth()->user()->id == $evento->id_anfitrion)
+        <a href="{{ $evento->id }}/edit"><button>Editar evento</button></a>
+    @endif
 </div>

@@ -1,4 +1,5 @@
 <div>
+    {{dump(auth()->check())}}
     <form action="{{ route('eventos.update', $evento->id) }}" method="POST">
         @csrf
         @method("PUT")
