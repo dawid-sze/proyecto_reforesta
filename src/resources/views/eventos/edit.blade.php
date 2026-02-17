@@ -1,5 +1,5 @@
 <div>
-    <form action="" method="POST">
+    <form action="{{ route('eventos.update', $evento->id) }}" method="POST">
         @csrf
         @method("PUT")
         <label for="fecha">Fecha del evento: </label>

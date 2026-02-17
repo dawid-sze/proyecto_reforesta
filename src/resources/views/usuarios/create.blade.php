@@ -38,11 +38,11 @@
         @enderror
         <br>
 
-        <label for="avatar">Avatar:</label>
+        <!-- <label for="avatar">Avatar:</label>
         <input type="file" name="avatar" id="" value="{{ old('avatar') }}"><br>
         @error('avatar')
             <span>{{ $message }}</span>
-        @enderror
+        @enderror -->
         <br>
         <input type="submit" value="Registrarse">
     </form>

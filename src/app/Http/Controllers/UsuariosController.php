@@ -15,8 +15,8 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = Usuarios::all();
-        
-        return view ("usuarios.index", compact('usuarios'));
+
+        return view("usuarios.index", compact('usuarios'));
     }
 
     /**
@@ -33,15 +33,15 @@ class UsuariosController extends Controller
     public function store(UsuariosPost $request)
     {
         $usuario = Usuarios::create([
-            'nick'=>$request->nick,
-            'nombre'=>$request->nombre,
-            'apellidos'=>$request->apellidos,
-            'password'=>bcrypt($request->password),
-            'email'=>$request->email,
-            'avatar'=>$request->avatar
+            'nick' => $request->nick,
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'password' => bcrypt($request->password),
+            'email' => $request->email,
+            'avatar' => $request->avatar
         ]);
 
-        return redirect()->route('usuarios.show',$usuario->id);
+        return redirect()->route('usuarios.show', $usuario->id);
     }
 
     /**
@@ -72,14 +72,14 @@ class UsuariosController extends Controller
         $usuario = Usuarios::findOrFail($id);
 
         $usuario->edit([
-            'nick'=>$request->nick,
-            'nombre'=>$request->nombre,
-            'apellidos'=>$request->apellidos,
-            'password'=>bcrypt($request->password),
-            'email'=>$request->email,
-            'avatar'=>$request->avatar
+            'nick' => $request->nick,
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'password' => bcrypt($request->password),
+            'email' => $request->email,
+            'avatar' => $request->avatar
         ]);
-        return redirect()->route('usuarios.show', $usuario-id);
+        return redirect()->route('usuarios.show', $usuario - id);
     }
 
     /**
@@ -94,22 +94,24 @@ class UsuariosController extends Controller
         return redirect()->route('inicio');
     }
 
-    public function loginForm(){
-        return view('auth.login');
+    public function loginForm()
+    {
+        return view('usuarios.login');
     }
 
-    public function login(UsuariosPost $request){
-        $credenciales = $request->only('email','password');
-
-        if(Auth::attempt($credenciales)){
-            return redirect()->intended(route('inicio'));
-        }else{
+    public function login(Request $request)
+    {
+        $credenciales = $request->only('email', 'password');
+        if (Auth::attempt($credenciales)) {
+            return redirect()->route('inicio');
+        } else {
             $error = 'Usuario incorrecto';
-            return view('auth.login', compact('error'));
+            return view('usuarios.login', compact('error', 'credenciales'));
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('inicio');
     }

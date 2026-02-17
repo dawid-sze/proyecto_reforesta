@@ -1,6 +1,7 @@
 <div>
-    <form action="usuarios.login" method="POST">
+    <form action="/login" method="POST">
         @csrf
+        @method('POST')
         <label for="email">Email:</label>
         <input type="text" name="email" value="{{ old('email') }}"><br>
         <label for="password">Contraseña:</label>
