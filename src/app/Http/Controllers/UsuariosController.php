@@ -59,8 +59,10 @@ class UsuariosController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->check() && auth()->user()->id != $id) {
+            return redirect()->route('inicio');
+        }
         $usuario = Usuarios::findOrFail($id);
-
         return view('usuarios.edit', compact('usuario'));
     }
 

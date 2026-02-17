@@ -23,6 +23,9 @@ class EventosController extends Controller
      */
     public function create()
     {
+        if (!auth()->check()) {
+            return redirect()->route('inicio');
+        }
        return view('eventos.create');
     }
 
@@ -38,7 +41,8 @@ class EventosController extends Controller
             'ubicacion'=>$request->ubicacion,
             'fecha'=>$request->fecha,
             'descripcion'=>$request->descripcion,
-            'imagen'=>$request->imagen
+            'imagen'=>$request->imagen,
+            'id_anfitrion'=>auth()->user()->id
         ]);
 
         return redirect()->route('eventos.show', $evento->id);
@@ -49,7 +53,10 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        $evento = Eventos::findOrFail($id)->load('anfitrion');
+        $evento = Eventos::findOrFail($id);
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
 
         return view('eventos.show', compact('evento'));
     }
@@ -60,6 +67,9 @@ class EventosController extends Controller
     public function edit(string $id)
     {
         $evento = Eventos::findOrFail($id);
+        if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
+            return redirect()->route('inicio');
+        }
 
         return view('eventos.edit', compact('evento'));
     }
@@ -70,6 +80,9 @@ class EventosController extends Controller
     public function update(EventosPost $request, string $id)
     {
         $evento = Eventos::findOrFail($id);
+        if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
+            return redirect()->route('inicio');
+        }
         $evento->edit([
             'nombre'=>$request->nombre,
             'tipo_evento'=>$request->tipo_evento,
@@ -89,6 +102,9 @@ class EventosController extends Controller
     public function destroy(string $id)
     {
         $evento = Eventos::findOrFail($id);
+        if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
+            return redirect()->route('inicio');
+        }
         $evento->delete();
 
         return redirect()->route('eventos.index');
