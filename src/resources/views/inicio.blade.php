@@ -1,4 +1,10 @@
 <div>
+    {{dump(auth()->check())}}
+   @if(auth()->check())
+   <p>Estas logeado</p>
+   @else
+   <p>No estaas logeado pringao </p>
+   @endif
     @include('navegacion')
     @if ($eventos->isEmpty())
         <p>No hay eventos</p>

@@ -1,6 +1,6 @@
 <div>
 
-    <form action="usuarios.update" method="POST">
+    <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
         @csrf
         @method('PUT')
         
