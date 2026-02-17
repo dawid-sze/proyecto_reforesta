@@ -31,7 +31,10 @@ class UsuariosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UsuariosPost $request)
-    {
+    {   
+        /* To-Do */
+        //Salta error al poner nick duplicado. 
+        
         $usuario = Usuarios::create([
             'nick' => $request->nick,
             'nombre' => $request->nombre,
@@ -40,7 +43,7 @@ class UsuariosController extends Controller
             'email' => $request->email,
             'avatar' => $request->avatar
         ]);
-
+        $this->login($request);
         return redirect()->route('usuarios.show', $usuario->id);
     }
 

@@ -1,12 +1,18 @@
-<nav>
-   <a href="{{ '/' }}">Inicio</a>
-   <a href="{{ '/especies' }}">Especies</a>
-   @if(auth()->check())
-   <a href="/logout">Cerrar sesión</a>
-   <a href="{{ '/eventos/create/' }}">Crear Eventos</a>
-   <a href="/usuarios/{{ auth()->user()->id }}">Ver perfil</a>
-   @else
-   <a href="{{ '/usuarios/create' }}">Registro</a>
-   <a href="{{ '/login_form' }}">Login</a>
-   @endif
-</nav>
+<div class="nav">
+   <nav>
+      <a href="{{ '/' }}"><button>Inicio</button></a>
+      <!-- To-Do -->
+      <!-- <a href="{{ '/especies' }}"><button>Especies</button></a> -->
+      @if(auth()->check())
+         <a href="/logout"><button>Cerrar sesión</button></a>
+         <a href="{{ '/eventos/create/' }}"><button>Crear Eventos</button></a>
+         <a href="/usuarios/{{ auth()->user()->id }}"><button>Ver perfil</button></a>
+      @else
+         <a href="{{ '/usuarios/create' }}"><button>Registro</button></a>
+         <a href="{{ '/login_form' }}"><button>Login</button></a>
+      @endif
+   </nav>
+   <a class="userAvatar" href="{{ route('usuarios.show', auth()->user()->id)}}"><img src="{{ auth()->user()->avatar }}"
+         onerror="this.src='/imagePlaceholder.png'"  
+         alt="Avatar de {{ auth()->user()->nick }}"></a>
+</div>
