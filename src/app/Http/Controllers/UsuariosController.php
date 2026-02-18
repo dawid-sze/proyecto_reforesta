@@ -7,6 +7,8 @@ use App\Models\Usuarios;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 class UsuariosController extends Controller
 {
     /**
@@ -35,13 +37,24 @@ class UsuariosController extends Controller
         /* To-Do */
         //Salta error al poner nick duplicado. 
         
+        $archivoPath = null;
+
+        if($request->hasFile('avatar')){
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
+
+            $archivo = $request->file('archivo');
+
+            dump($archivo->getRealPath());
+
+            dump(Storage::path($archivoPath));
+        }
         $usuario = Usuarios::create([
             'nick' => $request->nick,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'password' => bcrypt($request->password),
             'email' => $request->email,
-            'avatar' => $request->avatar
+            'avatar' => $archivoPath
         ]);
         $this->login($request);
         return redirect()->route('usuarios.show', $usuario->id);
@@ -76,13 +89,24 @@ class UsuariosController extends Controller
     {
         $usuario = Usuarios::findOrFail($id);
 
+        $archivoPath = null;
+
+        if($request->hasFile('avatar')){
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
+
+            $archivo = $request->file('archivo');
+
+            dump($archivo->getRealPath());
+
+            dump(Storage::path($archivoPath));
+        }
         $usuario->edit([
             'nick' => $request->nick,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'password' => bcrypt($request->password),
             'email' => $request->email,
-            'avatar' => $request->avatar
+            'avatar' => $archivoPath
         ]);
         return redirect()->route('usuarios.show', $usuario - id);
     }
@@ -119,5 +143,13 @@ class UsuariosController extends Controller
     {
         Auth::logout();
         return redirect()->route('inicio');
+    }
+
+    public function signUp(string $id){
+        auth()->user()->usuariosEventos()->syncWithoutDetaching([$id]);
+    }
+
+    public function signOff(string $id){
+        auth()->user()->detach($id);
     }
 }
