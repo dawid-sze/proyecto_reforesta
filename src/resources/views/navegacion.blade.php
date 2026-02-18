@@ -12,7 +12,9 @@
          <a href="{{ '/login_form' }}"><button>Login</button></a>
       @endif
    </nav>
-   <a class="userAvatar" href="{{ route('usuarios.show', auth()->user()->id)}}"><img src="{{ auth()->user()->avatar }}"
+   @if(auth()->check())
+      <a class="userAvatar" href="{{ route('usuarios.show', auth()->user()->id)}}"><img src="{{ auth()->user()->avatar }}"
          onerror="this.src='/imagePlaceholder.png'"  
          alt="Avatar de {{ auth()->user()->nick }}"></a>
+   @endif
 </div>

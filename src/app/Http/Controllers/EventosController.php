@@ -24,7 +24,7 @@ class EventosController extends Controller
     public function create()
     {
         if (!auth()->check()) {
-            return redirect()->route('inicio');
+            return view('usuarios.login');
         }
        return view('eventos.create');
     }
@@ -55,7 +55,7 @@ class EventosController extends Controller
     {
         $evento = Eventos::findOrFail($id);
         if (!auth()->check()) {
-            return redirect()->route('login');
+            return view('usuarios.login');
         }
 
         return view('eventos.show', compact('evento'));
