@@ -9,7 +9,7 @@
             <span>{{ $message }}</span>
         @enderror
         <br>
-        
+
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="" value="{{ old('nombre') }}"><br>
         @error('nombre')
@@ -46,5 +46,12 @@
         <br>
         <input type="submit" value="Registrarse">
     </form>
+    <div class="social-login">
+        <a href="{{ route('google.login') }}">
+            <button class="google-btn">
+                <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png" alt="Logo Google">
+                Iniciar con Google
+            </button>
+        </a>
+    </div>
 </div>
-
