@@ -1,3 +1,23 @@
 <div>
-    <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
+    <section>
+        @foreach ($eventos as $evento)
+            <article>
+                <div class="cabeceraEvento" style="background-image: url({{ $evento->imagen }});">
+                    <h1>{{ $evento->nombre }} </h1>
+                </div>
+                <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
+                <h3><strong>Anfitrión: </strong>{{ $evento->anfitrion->nombre }}</h3>
+                <h3><strong>Tipo de Evento: </strong>{{ $evento->tipo_evento }}</h3>
+                <a href="eventos/ {{ $evento->id }}"><button>Ver detalles</button></a>
+                @if (auth()->check() && auth()->user()->id == $evento->id_anfitrion)
+                    <a href="eventos/ {{ $evento->id }}/edit"><button>Modificar evento</button></a>
+                    <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <button type="submit" onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
+                    </form>
+                @endif
+            </article>
+        @endforeach
+    </section>
 </div>

@@ -1,6 +1,7 @@
-html{
+html {
     background-color: bisque;
 }
+
 section {
     display: flex;
     flex-wrap: wrap;
@@ -8,6 +9,22 @@ section {
     justify-content: flex-start;
     margin-top: 1%;
     width: 90%;
+}
+
+.especie {
+    #imagenEspecie {
+        max-width: 50px;
+        max-height: 50px;
+        overflow-clip-margin: content-box;
+        overflow: hidden;
+
+        img {
+            width: 50px;
+            height: 50px;
+
+            size: 50px;
+        }
+    }
 }
 
 article {
@@ -33,23 +50,27 @@ article {
     display: flex;
     justify-content: center;
     background-color: rgb(44, 44, 44);
-    .userAvatar{
+
+    .userAvatar {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 40px;
         width: 40px;
         margin-top: 5px;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
             border-radius: 100%;
-            
+
         }
-        img:hover{
-            filter:brightness(90%);
+
+        img:hover {
+            filter: brightness(90%);
         }
     }
+
     nav {
         text-align: center;
         width: 90%;
