@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventosPost;
 use App\Models\Eventos;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class EventosController extends Controller
 {
     /**
@@ -34,6 +34,17 @@ class EventosController extends Controller
      */
     public function store(EventosPost $request)
     {
+        $archivoPath = null;
+
+        if($request->hasFile('avatar')){
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
+
+            $archivo = $request->file('archivo');
+
+            dump($archivo->getRealPath());
+
+            dump(Storage::path($archivoPath));
+        }
         $evento = Eventos::create([
             'nombre'=>$request->nombre,
             'tipo_evento'=>$request->tipo_evento,
@@ -41,7 +52,7 @@ class EventosController extends Controller
             'ubicacion'=>$request->ubicacion,
             'fecha'=>$request->fecha,
             'descripcion'=>$request->descripcion,
-            'imagen'=>$request->imagen,
+            'imagen'=>$archivoPath,
             'id_anfitrion'=>auth()->user()->id
         ]);
 
@@ -83,6 +94,17 @@ class EventosController extends Controller
         if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
             return redirect()->route('inicio');
         }
+        $archivoPath = null;
+
+        if($request->hasFile('avatar')){
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
+
+            $archivo = $request->file('archivo');
+
+            dump($archivo->getRealPath());
+
+            dump(Storage::path($archivoPath));
+        }
         $evento->edit([
             'nombre'=>$request->nombre,
             'tipo_evento'=>$request->tipo_evento,
@@ -90,7 +112,7 @@ class EventosController extends Controller
             'ubicacion'=>$request->ubicacion,
             'fecha'=>$request->fecha,
             'descripcion'=>$request->descripcion,
-            'imagen'=>$request->imagen
+            'imagen'=>$archivoPath
         ]);
 
         return redirect()->route('eventos.show', $evento->id);
