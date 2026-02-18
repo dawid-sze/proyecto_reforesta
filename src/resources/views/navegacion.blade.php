@@ -1,8 +1,7 @@
 <div class="nav">
    <nav>
       <a href="{{ '/' }}"><button>Inicio</button></a>
-      <!-- To-Do -->
-      <!-- <a href="{{ '/especies' }}"><button>Especies</button></a> -->
+      <a href="{{ '/especies' }}"><button>Especies</button></a>
       @if(auth()->check())
          <a href="/logout"><button>Cerrar sesión</button></a>
          <a href="{{ '/eventos/create/' }}"><button>Crear Eventos</button></a>

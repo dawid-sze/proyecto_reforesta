@@ -13,7 +13,7 @@ class EventosController extends Controller
      */
     public function index()
     {
-         $eventos = Eventos::all();
+         $eventos = Eventos::all()->load('anfitrion','anfitrion');
 
         return view('inicio', compact('eventos'));
     }
@@ -64,7 +64,7 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        $evento = Eventos::findOrFail($id);
+        $evento = Eventos::findOrFail($id)->load('anfitrion','anfitrion');
         if (!auth()->check()) {
             return view('usuarios.login');
         }
