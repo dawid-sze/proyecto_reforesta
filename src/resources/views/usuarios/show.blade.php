@@ -29,12 +29,28 @@
                 <!-- Mirar a ver como llamamos el nombre del anfitrion -->
                 <p>{{ $evento->tipo_evento }}</p>
                 <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
-                @if (auth()->check() && auth()->user()->id == $evento->id_anfitrion)
+                @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)
                     <a href="{{ route("eventos.edit", $evento->id) }}"><button>Modificar evento</button></a>
                     <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
                         @csrf
                         @method("DELETE")
                         <button type="submit" onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
+                    </form>
+                @endif
+            </article>
+        @endforeach
+        @foreach ($usuario->usuariosEventos as $evento)
+            <article>
+                <h1>{{ $evento->nombre }} </h1>
+                <p>{{ $evento->ubicacion }}</p>
+                <!-- Mirar a ver como llamamos el nombre del anfitrion -->
+                <p>{{ $evento->tipo_evento }}</p>
+                <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
+                @if (auth()->check() && auth()->user()->id == $usuario->id)
+                    <form action="{{ route('signOff', [$evento->id,true]) }} " method="POST">
+                        @csrf
+                        @method('POST')
+                        <input type="submit" value="Desuscribirse">
                     </form>
                 @endif
             </article>

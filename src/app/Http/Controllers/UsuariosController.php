@@ -100,7 +100,7 @@ class UsuariosController extends Controller
         $usuario->update([
             'nombre' => $request->nombre != "" ? $request->nombre:$usuario->nombre,
             'apellidos' => $request->apellidos != "" ? $request->apellidos:$usuario->apellidos,
-            'avatar' => $archivoPath ? $archivoPath : $usuario->avatar
+            'avatar' => $archivoPath ?: $usuario->avatar
         ]);
         return redirect()->route('usuarios.show', $usuario->id);
     }
@@ -142,10 +142,17 @@ class UsuariosController extends Controller
     public function signUp(string $id)
     {
         auth()->user()->usuariosEventos()->syncWithoutDetaching([$id]);
+        return redirect()->route('inicio');
     }
 
-    public function signOff(string $id)
+    public function signOff(string $id, bool $show = false)
     {
-        auth()->user()->detach($id);
+        auth()->user()->usuariosEventos()->detach($id);
+        if($show){
+            return redirect()->route('usuarios.show',auth()->user()->id);
+        }else{
+            return redirect()->route('inicio');
+        }
+        
     }
 }
