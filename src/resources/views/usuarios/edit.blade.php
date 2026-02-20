@@ -1,7 +1,33 @@
-<div>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar perfil</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+    @include('navegacion')
+    <div>
         <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
             @csrf
             @method('PUT')
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="" value="{{ old('nombre') ? old('nombre') : $usuario->nombre }}"><br>
+            @error('nombre')
+                <span>{{ $message }}</span>
+            @enderror
+            <br>
+
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="" value="{{ old('apellidos') ? old('apellidos') : $usuario->apellidos }}"><br>
+            @error('apellidos')
+                <span>{{ $message }}</span>
+            @enderror
+            <br>
 
             <label for="avatar">Nuevo avatar:</label>
             <input type="file" name="avatar" id=""
@@ -10,7 +36,10 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <input type="submit" value="Cambiar Avatar">
+            <img src="{{ old('avatar') ? old('avatar') : $usuario->avatar }}" alt="">
+            <input type="submit" value="Editar perfil">
         </form>
+    </div>
+</body>
 
-</div>
+</html>
