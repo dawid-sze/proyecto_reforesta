@@ -36,14 +36,8 @@ class EventosController extends Controller
     {
         $archivoPath = null;
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $archivoPath = $request->file('avatar')->store('repositorio_ficheros');
-
-            $archivo = $request->file('archivo');
-
-            dump($archivo->getRealPath());
-
-            dump(Storage::path($archivoPath));
         }
         $evento = Eventos::create([
             'nombre'=>$request->nombre,
