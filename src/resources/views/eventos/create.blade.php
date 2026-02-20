@@ -56,6 +56,13 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
+            <br>
+            <label for="pdf">PDF del evento:</label>
+            <input type="file" name="pdf" id="" value="{{ old('pdf') }}"><br>
+            @error('pdf')
+                <span>{{ $message }}</span>
+            @enderror
+            <br>
             <input type="submit" value="Crear evento">
         </form>
     </div>

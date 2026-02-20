@@ -11,7 +11,7 @@
 <body>
     @include('navegacion')
     <div>
-        <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+        <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -30,13 +30,12 @@
             <br>
 
             <label for="avatar">Nuevo avatar:</label>
-            <input type="file" name="avatar" id=""
-                value="{{ old('avatar') !== null ? old('avatar') : $usuario->avatar }}"><br>
+            <input type="file" name="avatar" id=""><br>
             @error('avatar')
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <img src="{{ old('avatar') ? old('avatar') : $usuario->avatar }}" alt="">
+            <img width="50px" src="{{ old('avatar') ? old('avatar') : $usuario->avatar }}" alt="">
             <input type="submit" value="Editar perfil">
         </form>
     </div>

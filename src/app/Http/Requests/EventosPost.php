@@ -29,7 +29,8 @@ class EventosPost extends FormRequest
             'ubicacion'=> 'string|max:70',
             'date' => 'required|date|after:today',
             'descripcion' => 'string|max:300',
-            'imagen' => 'max:10000|mimes:jpeg,jpg,png,webp,svg'
+            'imagen' => 'max:10000|mimes:jpeg,jpg,png,webp,svg',
+            'pdf' => 'max:10000|mimes:pdf',
         ];
     }
 
@@ -43,8 +44,8 @@ class EventosPost extends FormRequest
             'date.requiered' => 'La fecha es un campo obligatorio',
             'date.after' => 'La fecha del evento tiene que ser posterior a hoy',
             'descripcion' => 'La descripcion no puede superar los 300 carácteres',
-            'imagen.max' => 'La imagen no puede superar los 10000 carácteres',
-            'imagen.mimes' => 'La imagen tiene que cumplir con los siguientes formatos jpeg,jpg,png,webp,svg'
+            'imagen.mimes' => 'La imagen tiene que cumplir con los siguientes formatos jpeg,jpg,png,webp,svg',
+            'pdf.mimes' => 'Solo se permite el formato PDF'
         ];
     }
 }

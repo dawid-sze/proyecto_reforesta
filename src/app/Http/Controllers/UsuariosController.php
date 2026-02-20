@@ -40,8 +40,16 @@ class UsuariosController extends Controller
         $archivoPath = null;
 
         if ($request->hasFile('avatar')) {
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros' );
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros');
         }
+        // Inside User.php Model
+
+
+        if (!str_contains($archivoPath, 'googleusercontent.com')) {
+            $archivoPath = Storage::url($archivoPath);
+        }
+
+
         $usuario = Usuarios::create([
             'nick' => $request->nick,
             'nombre' => $request->nombre,
@@ -79,16 +87,19 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UsuariosPost $request, string $id)
+    public function update(Request $request, string $id)
     {
         $usuario = Usuarios::findOrFail($id);
         $archivoPath = null;
-        if ($request->hasFile('avatar') && $request->avatar !== null) {
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros', 'public');
+        if ($request->hasFile('avatar') && $request->avatar != null) {
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros');
         }
-        $usuario->edit([
-            'nombre' => $request->nombre,
-            'apellidos' => $request->apellidos,
+        if (!str_contains($archivoPath, 'googleusercontent.com') && $archivoPath != "") {
+            $archivoPath = Storage::url($archivoPath);
+        }
+        $usuario->update([
+            'nombre' => $request->nombre != "" ? $request->nombre:$usuario->nombre,
+            'apellidos' => $request->apellidos != "" ? $request->apellidos:$usuario->apellidos,
             'avatar' => $archivoPath ? $archivoPath : $usuario->avatar
         ]);
         return redirect()->route('usuarios.show', $usuario->id);
