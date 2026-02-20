@@ -15,8 +15,8 @@ Route::resource('eventos', EventosController::class);
 Route::get('login_form', [UsuariosController::class, 'loginForm'])->name('login_form');
 Route::post('login', [UsuariosController::class, 'login'])->name('login');
 Route::get('logout', [UsuariosController::class, 'logout'])->name('logout');
-Route::post('signUp', [UsuariosController::class, 'signUp']);
-Route::post('signOff', [UsuariosController::class, 'signOff']);
+Route::post('signUp/{id}', [UsuariosController::class, 'signUp'])->name('signUp');
+Route::post('signOff/{id}/{show}', [UsuariosController::class, 'signOff'])->name('signOff');
 
 Route::get('/auth/google', function () {
     return Socialite::driver('google')->redirect();

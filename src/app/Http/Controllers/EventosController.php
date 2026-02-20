@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventosPost;
+use App\Models\Especies;
 use App\Models\Eventos;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 class EventosController extends Controller
@@ -13,7 +15,11 @@ class EventosController extends Controller
      */
     public function index()
     {
-         $eventos = Eventos::all()->load('anfitrion','anfitrion');
+        if (auth()->check()) {
+            $eventos = Eventos::all()->load(['anfitrion', 'participantes']);
+        } else {
+            $eventos = Eventos::all()->load('anfitrion');
+        }
 
         return view('inicio', compact('eventos'));
     }
@@ -26,7 +32,8 @@ class EventosController extends Controller
         if (!auth()->check()) {
             return view('usuarios.login');
         }
-       return view('eventos.create');
+        $especies = Especies::all();
+        return view('eventos.create', compact('especies'));
     }
 
     /**
@@ -34,22 +41,31 @@ class EventosController extends Controller
      */
     public function store(EventosPost $request)
     {
-        $archivoPath = null;
+        $archivoPathImagen = null;
+        $archivoPathPDF = null;
 
-        if ($request->hasFile('avatar')) {
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros');
-        }
+
+        $archivoPathImagen = $request->file('imagen')->store('repositorio_ficheros');
+        $archivoPathImagen = Storage::url($archivoPathImagen);
+
+
+        $archivoPathPDF = $request->file('pdf')->store('repositorio_ficheros');
+        $archivoPathPDF = Storage::url($archivoPathPDF);
+
+
+
         $evento = Eventos::create([
-            'nombre'=>$request->nombre,
-            'tipo_evento'=>$request->tipo_evento,
-            'tipo_terreno'=>$request->tipo_terreno,
-            'ubicacion'=>$request->ubicacion,
-            'fecha'=>$request->fecha,
-            'descripcion'=>$request->descripcion,
-            'imagen'=>$archivoPath,
-            'id_anfitrion'=>auth()->user()->id
+            'nombre' => $request->nombre,
+            'tipo_evento' => $request->tipo_evento,
+            'tipo_terreno' => $request->tipo_terreno,
+            'ubicacion' => $request->ubicacion,
+            'fecha' => $request->fecha,
+            'descripcion' => $request->descripcion,
+            'imagen' => $archivoPathImagen,
+            'pdf' => $archivoPathPDF,
+            'anfitrion_id' => auth()->user()->id
         ]);
-
+        $evento->especies()->syncWithoutDetaching([$request->especie]);
         return redirect()->route('eventos.show', $evento->id);
     }
 
@@ -58,7 +74,7 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        $evento = Eventos::findOrFail($id)->load('anfitrion','anfitrion');
+        $evento = Eventos::findOrFail($id)->load('anfitrion', 'anfitrion');
         if (!auth()->check()) {
             return view('usuarios.login');
         }
@@ -82,31 +98,32 @@ class EventosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventosPost $request, string $id)
+    public function update(Request $request, string $id)
     {
         $evento = Eventos::findOrFail($id);
         if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
             return redirect()->route('inicio');
         }
-        $archivoPath = null;
+        $archivoPathImagen = null;
+        $archivoPathPDF = null;
 
-        if($request->hasFile('avatar')){
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
-
-            $archivo = $request->file('archivo');
-
-            dump($archivo->getRealPath());
-
-            dump(Storage::path($archivoPath));
+        if ($request->hasFile(key: 'imagen') && $request->imagen != null) {
+            $archivoPathImagen = $request->file('imagen')->store('repositorio_ficheros');
+            $archivoPathImagen = Storage::url($archivoPathImagen);
         }
-        $evento->edit([
-            'nombre'=>$request->nombre,
-            'tipo_evento'=>$request->tipo_evento,
-            'tipo_terreno'=>$request->tipo_terreno,
-            'ubicacion'=>$request->ubicacion,
-            'fecha'=>$request->fecha,
-            'descripcion'=>$request->descripcion,
-            'imagen'=>$archivoPath
+        if ($request->hasFile(key: 'pdf') && $request->pdf != null) {
+            $archivoPathPDF = $request->file('pdf')->store('repositorio_ficheros');
+            $archivoPathPDF = Storage::url($archivoPathPDF);
+        }
+        $evento->update([
+            'nombre' => $request->nombre != "" ? $request->nombre : $evento->nombre,
+            'tipo_evento' => $request->tipo_evento != "" ? $request->tipo_evento : $evento->tipo_evento,
+            'tipo_terreno' => $request->tipo_terreno != "" ? $request->tipo_terreno : $evento->tipo_terreno,
+            'ubicacion' => $request->ubicacion != "" ? $request->ubicacion : $evento->ubicacion,
+            'fecha' => $request->fecha > new DateTime('today') ? $request->fecha : $evento->fecha,
+            'descripcion' => $request->descripcion != "" ? $request->descripcion : $evento->descripcion,
+            'imagen' => $archivoPathImagen ?: $evento->imagen,
+            'pdf' => $archivoPathPDF ?: $evento->pdf,
         ]);
 
         return redirect()->route('eventos.show', $evento->id);
@@ -126,5 +143,5 @@ class EventosController extends Controller
         return redirect()->route('eventos.index');
     }
 
-    
+
 }

@@ -11,7 +11,7 @@
 <body>
     @include('navegacion')
     <div>
-        <form action="{{ route('eventos.store') }}" method="POST">
+        <form action="{{ route('eventos.store') }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('POST')
             <label for="nombre">Nombre del evento:</label>
@@ -50,12 +50,17 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
+            <select name="especie" id="especie">
+                @foreach ($especies as $especie)
+                    <option value="{{ $especie->id }}">{{ $especie->nombre }}</option>
+                @endforeach
+            </select>
+            <br>
             <label for="imagen">Imagen del evento:</label>
             <input type="file" name="imagen" id="" value="{{ old('imagen') }}"><br>
             @error('imagen')
                 <span>{{ $message }}</span>
             @enderror
-            <br>
             <br>
             <label for="pdf">PDF del evento:</label>
             <input type="file" name="pdf" id="" value="{{ old('pdf') }}"><br>

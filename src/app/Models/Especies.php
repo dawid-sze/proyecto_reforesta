@@ -13,6 +13,6 @@ class Especies extends Model
     protected $fillable = ['nombre','clima','region','imagen','beneficios','descripcion','tiempo_crecimiento'];
 
     public function eventos(){
-        return $this->belongsToMany(Eventos::class);
+        return $this->belongsToMany(Eventos::class, 'eventos_especies');
     }
 }
