@@ -28,7 +28,7 @@ class UsuariosPost extends FormRequest
             'apellidos'=> 'string|max:50',
             'password'=> 'required|string|max:64',
             'email' => 'required|string|max:50',
-            'avatar' => 'string|max:300'
+            'avatar' => 'max:300'
         ];
     }
     public function messages(){
@@ -47,7 +47,7 @@ class UsuariosPost extends FormRequest
             'email.max' => 'El email no puede superar los 50 carácteres',
             'email.string' => 'El email no puede estar vacío',
             'email.required' => 'El email es obligatorio',
-            'avartar.max' => 'El avatar no puede superar los 300 carácteres'
+            'avatar.max' => 'El avatar no puede superar los 300 carácteres'
       ];
     }
 }

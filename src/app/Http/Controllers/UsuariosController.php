@@ -33,20 +33,14 @@ class UsuariosController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(UsuariosPost $request)
-    {   
+    {
         /* To-Do */
         //Salta error al poner nick duplicado. 
-        
+
         $archivoPath = null;
 
-        if($request->hasFile('avatar')){
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
-
-            $archivo = $request->file('archivo');
-
-            dump($archivo->getRealPath());
-
-            dump(Storage::path($archivoPath));
+        if ($request->hasFile('avatar')) {
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros' );
         }
         $usuario = Usuarios::create([
             'nick' => $request->nick,
@@ -88,27 +82,16 @@ class UsuariosController extends Controller
     public function update(UsuariosPost $request, string $id)
     {
         $usuario = Usuarios::findOrFail($id);
-
         $archivoPath = null;
-
-        if($request->hasFile('avatar')){
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
-
-            $archivo = $request->file('archivo');
-
-            dump($archivo->getRealPath());
-
-            dump(Storage::path($archivoPath));
+        if ($request->hasFile('avatar') && $request->avatar !== null) {
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros', 'public');
         }
         $usuario->edit([
-            'nick' => $request->nick,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
-            'password' => bcrypt($request->password),
-            'email' => $request->email,
-            'avatar' => $archivoPath
+            'avatar' => $archivoPath ? $archivoPath : $usuario->avatar
         ]);
-        return redirect()->route('usuarios.show', $usuario - id);
+        return redirect()->route('usuarios.show', $usuario->id);
     }
 
     /**
@@ -145,11 +128,13 @@ class UsuariosController extends Controller
         return redirect()->route('inicio');
     }
 
-    public function signUp(string $id){
+    public function signUp(string $id)
+    {
         auth()->user()->usuariosEventos()->syncWithoutDetaching([$id]);
     }
 
-    public function signOff(string $id){
+    public function signOff(string $id)
+    {
         auth()->user()->detach($id);
     }
 }

@@ -37,7 +37,7 @@ class EventosController extends Controller
         $archivoPath = null;
 
         if($request->hasFile('avatar')){
-            $archivoPath = $request->file('avatar')->store('repositorio_ficheros','public');
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros');
 
             $archivo = $request->file('archivo');
 
