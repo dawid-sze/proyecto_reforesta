@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
+<body class="bodyForm">
     @include('navegacion')
-    <div>
+    <div class="formulario">
         {{dump(auth()->check())}}
         <form action="{{ route('eventos.update', $evento->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -43,7 +43,7 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <input type="submit" value="Modificar evento">
+            <input class="button" type="submit" value="Modificar evento">
         </form>
     </div>
 </body>

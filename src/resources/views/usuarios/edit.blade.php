@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
+<body class="bodyForm">
     @include('navegacion')
-    <div>
+    <div class="formulario">
         <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -36,7 +36,7 @@
             @enderror
             <br>
             <img width="50px" src="{{ old('avatar') ? old('avatar') : $usuario->avatar }}" alt="">
-            <input type="submit" value="Editar perfil">
+            <input class="button" type="submit" value="Editar perfil">
         </form>
     </div>
 </body>
