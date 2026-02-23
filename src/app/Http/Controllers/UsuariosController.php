@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUsuarios;
 use App\Http\Requests\UsuariosPost;
 use App\Models\Usuarios;
 
@@ -87,7 +88,7 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUsuarios $request, string $id)
     {
         $usuario = Usuarios::findOrFail($id);
         $archivoPath = null;
@@ -98,8 +99,8 @@ class UsuariosController extends Controller
             $archivoPath = Storage::url($archivoPath);
         }
         $usuario->update([
-            'nombre' => $request->nombre != "" ? $request->nombre:$usuario->nombre,
-            'apellidos' => $request->apellidos != "" ? $request->apellidos:$usuario->apellidos,
+            'nombre' => $request->nombre != "" ? $request->nombre : $usuario->nombre,
+            'apellidos' => $request->apellidos != "" ? $request->apellidos : $usuario->apellidos,
             'avatar' => $archivoPath ?: $usuario->avatar
         ]);
         return redirect()->route('usuarios.show', $usuario->id);
@@ -141,18 +142,21 @@ class UsuariosController extends Controller
 
     public function signUp(string $id)
     {
-        auth()->user()->usuariosEventos()->syncWithoutDetaching([$id]);
-        return redirect()->route('inicio');
-    }
-
-    public function signOff(string $id, bool $show = false)
-    {
-        auth()->user()->usuariosEventos()->detach($id);
-        if($show){
-            return redirect()->route('usuarios.show',auth()->user()->id);
-        }else{
+        if (auth()->check()) {
+            auth()->user()->usuariosEventos()->syncWithoutDetaching([$id]);
             return redirect()->route('inicio');
         }
-        
+        return redirect()->route('login_form');
+    }
+
+    public function signOff(string $id, bool $show)
+    {
+        auth()->user()->usuariosEventos()->detach($id);
+        if ($show == 1) {
+            return redirect()->route('usuarios.show', auth()->user()->id);
+        } else {
+            return redirect()->route('inicio');
+        }
+
     }
 }

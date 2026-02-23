@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventosPost;
+use App\Http\Requests\UpdateEventos;
 use App\Models\Especies;
 use App\Models\Eventos;
 use DateTime;
@@ -16,9 +17,9 @@ class EventosController extends Controller
     public function index()
     {
         if (auth()->check()) {
-            $eventos = Eventos::all()->load(['anfitrion', 'participantes']);
+            $eventos = Eventos::all()->load(['anfitrion', 'participantes', 'especies']);
         } else {
-            $eventos = Eventos::all()->load('anfitrion');
+            $eventos = Eventos::all()->load(['anfitrion','especies']);
         }
 
         return view('inicio', compact('eventos'));
@@ -65,6 +66,7 @@ class EventosController extends Controller
             'pdf' => $archivoPathPDF,
             'anfitrion_id' => auth()->user()->id
         ]);
+        dump($request->especie);
         $evento->especies()->syncWithoutDetaching([$request->especie]);
         return redirect()->route('eventos.show', $evento->id);
     }
@@ -74,7 +76,7 @@ class EventosController extends Controller
      */
     public function show(string $id)
     {
-        $evento = Eventos::findOrFail($id)->load('anfitrion', 'anfitrion');
+        $evento = Eventos::findOrFail($id)->load('anfitrion', 'participantes');
         if (!auth()->check()) {
             return view('usuarios.login');
         }
@@ -98,7 +100,7 @@ class EventosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateEventos $request, string $id)
     {
         $evento = Eventos::findOrFail($id);
         if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {

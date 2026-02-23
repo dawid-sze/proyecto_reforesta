@@ -10,7 +10,7 @@ class Eventos extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'eventos';
-    protected $fillable = ['nombre','tipo_evento','tipo_terreno','ubicacion','fecha','descripcion','imagen','pdf','anfitrion_id'];
+    protected $fillable = ['nombre','tipo_evento','tipo_terreno','ubicacion','fecha','descripcion','imagen','pdf','anfitrion_id', 'estado_evento'];
 
     public function participantes(){
         return $this->belongsToMany(Usuarios::class, 'usuarios_eventos');
@@ -21,6 +21,6 @@ class Eventos extends Model
     }
 
     public function especies(){
-        return $this->belongsToMany(Especies::class, 'eventos_especies');
+        return $this->belongsToMany(Especies::class, 'eventos_especies', 'evento_id','especie_id');
     }
 }

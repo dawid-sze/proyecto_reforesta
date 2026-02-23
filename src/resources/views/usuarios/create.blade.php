@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
+<body class="bodyForm">
     @include('navegacion')
-    <div>
+    <div class="formulario">
 
         <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -56,9 +56,8 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <input type="submit" value="Registrarse">
-        </form>
-        <div class="social-login">
+            <input class="button" type="submit" value="Registrarse">
+            <div class="social-login">
             <a href="{{ route('google.login') }}">
                 <button class="google-btn">
                     <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png" alt="Logo Google">
@@ -66,6 +65,7 @@
                 </button>
             </a>
         </div>
+        </form>
     </div>
 </body>
 

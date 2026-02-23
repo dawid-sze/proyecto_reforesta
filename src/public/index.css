@@ -2,6 +2,27 @@ html {
     background-color: bisque;
 }
 
+button,
+.button {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    padding: 5px;
+    font-weight: bold;
+}
+
+button:hover,
+.button:hover {
+    background-color: rgb(253, 192, 116);
+}
+
+.suscribirse:hover {
+    background-color: rgb(253, 239, 116);
+}
+
+.desuscribirse:hover {
+    background-color: rgb(253, 148, 116);
+}
+
 section {
     display: flex;
     flex-wrap: wrap;
@@ -9,6 +30,23 @@ section {
     justify-content: flex-start;
     margin-top: 1%;
     width: 90%;
+
+    .infoUserText {
+        margin-right: 10px;
+    }
+
+    .userInfoAvatar {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+    }
 }
 
 .especie {
@@ -30,7 +68,7 @@ section {
 article {
     border: 1px solid grey;
     width: 32%;
-    height: 300px;
+    height: 400px;
     margin: 0.5%;
     background-color: rgb(255, 244, 231);
     padding: 10px;
@@ -88,5 +126,53 @@ article {
         a button:hover {
             background-color: rgb(105, 105, 105);
         }
+    }
+}
+
+.bodyForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.formulario {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        background-color: rgb(255, 218, 174);
+        padding: 5px;
+        padding-top: 15px;
+        text-align: center;
+        width: 70%;
+        margin-top: 15px;
+        height: 500px;
+
+        label {
+            font-weight: bold;
+        }
+    }
+}
+main{
+    margin-top: 5px;
+    .cabeceraEvento{
+        display: flex;
+        align-items: center;
+    }
+}
+.botones{
+    display: flex;
+}
+.cabeceraEvento{
+    h1{
+        background-color: rgba(255, 228, 196, 0.74);
+        width: max-content;
+        color: black;
     }
 }
