@@ -29,7 +29,11 @@ class UpdateEventos extends FormRequest
             'pdf' => 'max:10000|mimes:pdf',
         ];
     }
-
+    
+    /**
+     * Summary of messages
+     * @return array{descripcion: string, fecha.after: string, imagen.mimes: string, pdf.mimes: string}
+     */
     public function messages() {
         return [
             'fecha.after' => 'La fecha del evento tiene que ser posterior a hoy',

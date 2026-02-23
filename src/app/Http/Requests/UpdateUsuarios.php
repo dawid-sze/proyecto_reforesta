@@ -29,6 +29,10 @@ class UpdateUsuarios extends FormRequest
         ];
     }
 
+     /**
+      * Summary of messages
+      * @return array{apellidos.max: string, apellidos.string: string, avatar.max: string, nombre.max: string, nombre.string: string}
+      */
      public function messages(){
       return  [
             'nombre.max' => 'El nombre no puede superar los 20 carácteres',

@@ -11,7 +11,6 @@
 <body class="bodyForm">
     @include('navegacion')
     <div class="formulario">
-        {{dump(auth()->check())}}
         <form action="{{ route('eventos.update', $evento->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method("PUT")

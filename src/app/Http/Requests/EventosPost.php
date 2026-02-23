@@ -34,6 +34,10 @@ class EventosPost extends FormRequest
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{descripcion: string, fecha.after: string, fecha.requiered: string, imagen.mimes: string, nombre.max: string, nombre.required: string, pdf.mimes: string, tipo_evento.max: string, tipo_terreno.max: string, ubicacion.max: string}
+     */
     public function messages() {
         return [
             'nombre.required' => 'El nombre es obligatorio',

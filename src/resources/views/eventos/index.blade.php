@@ -3,39 +3,44 @@
         @foreach ($eventos as $evento)
             <article>
                 <div class="cabeceraEvento"
-                    style="padding:5px;min-height:20%; background-image: url({{ $evento->imagen }}),url('/placeholderEvento.avif'); background-repeat: no-repeat; background-size: cover;">
-                    <h1>{{ $evento->nombre }} </h1>
+                    style="color:white;padding:5px;min-height:20%; background-image: url({{ $evento->imagen }}),url('/placeholderEvento.avif'); background-repeat: no-repeat; background-size: cover;">
+                    <div class="titulo">
+                        <h1>{{ $evento->nombre }} </h1>
+                        <h3>Por <a
+                                href="{{ route('usuarios.show', $evento->anfitrion->id) }}">{{ $evento->anfitrion->nombre }}</a>
+                        </h3>
+                    </div>
                     <?php 
-                                        $participa = false;
-                                    ?>
+                $participa = false;
+             ?>
                     @if(auth()->check())
                         @foreach ($evento->participantes as $participante)
                             @if ($participante->id == auth()->user()->id)
                                 <?php 
-                                                    $participa = true;
-                                                ?>
+                                                        $participa = true;
+                                                    ?>
                             @endif
                         @endforeach
                     @endif()
-                    @if($evento->estado_evento == 0)
+                    @if($evento->fecha >= new DateTime('today'))
+
                         @if($participa)
-                            <form action="{{ route('signOff', [$evento->id, 0]) }} " method="POST">
+                            <form action="{{ route('signOff', [$evento->id, 1]) }} " method="POST">
                                 @csrf
                                 @method('POST')
                                 <input class="button desuscribirse" type="submit" value="Desuscribirse">
                             </form>
                         @else
-                            <form action="{{ route('signUp', $evento->id) }} " method="POST">
+                            <form action="{{ route('signUp', [$evento->id, 1]) }} " method="POST">
                                 @csrf
                                 @method('POST')
-                                <input class="button suscribirse" type="submit" value="Suscribirse">
+                                <input class="button desuscribirse" type="submit" value="Suscribirse">
                             </form>
                         @endif
                     @endif
                 </div>
 
                 <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
-                <h3><strong>Anfitrión: </strong>{{ $evento->anfitrion->nombre }}</h3>
                 <h3><strong>Tipo de Evento: </strong>{{ $evento->tipo_evento }}</h3>
                 <h3><strong>Fecha del evento: </strong>{{ $evento->fecha }}</h3>
                 <h4><strong>Estado: </strong>{{ $evento->estado_evento == 0 ? "Abierto" : "Finalizado" }}</h4>

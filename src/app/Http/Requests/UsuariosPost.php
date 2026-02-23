@@ -31,6 +31,11 @@ class UsuariosPost extends FormRequest
             'avatar' => 'max:300'
         ];
     }
+    
+    /**
+     * Summary of messages
+     * @return array{apellidos.max: string, apellidos.string: string, avatar.max: string, email.max: string, email.required: string, email.string: string, email.unique: string, nick.max: string, nick.required: string, nick.string: string, nick.unique: string, nombre.max: string, nombre.required: string, nombre.string: string, password.max: string, password.required: string, password.string: string}
+     */
     public function messages(){
       return  [
             'nick.required' => 'El nick es obligatorio',

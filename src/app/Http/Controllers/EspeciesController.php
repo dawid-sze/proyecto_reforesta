@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class EspeciesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Reenvía al usuario a la vista index pasando las especies
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -34,7 +35,9 @@ class EspeciesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Reenvía al usuario a los detalles de la especie
+     * @param string $id
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(string $id)
     {
