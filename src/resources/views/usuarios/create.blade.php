@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
     <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </head>
 
 <body class="bodyForm">
@@ -56,15 +58,20 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
+            <input class="button" type="submit" value="Registrarse">
         </form>
-        <input class="button" type="submit" value="Registrarse">
-        <div class="social-login">
-            <a href="{{ route('google.login') }}">
-                <button class="google-btn">
-                    <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png" alt="Logo Google">
-                    Iniciar con Google
-                </button>
-            </a>
+
+        <div class="botones">
+            <a href="{{ route('login_form') }}"><button>Iniciar sesión</button></a>
+            <div class="social-login">
+                <a href="{{ route('google.login') }}">
+                    <button class="google-btn">
+                        <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png"
+                            alt="Logo Google">
+                        Iniciar con Google
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
 </body>
