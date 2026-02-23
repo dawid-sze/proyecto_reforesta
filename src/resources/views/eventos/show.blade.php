@@ -50,8 +50,7 @@
         <h3><strong>Tipo de evento: </strong>{{ $evento->tipo_evento }}</h3>
         <h3><strong>Tipo de terreno: </strong>{{ $evento->tipo_terreno }}</h3>
         <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
-        <h3><strong>Fecha: </strong>{{ $evento->fecha }}</h3>
-
+        <h3><strong>Fecha: </strong>{{ ($evento->fecha)->format('d/m/Y')}}</h3>
         <h3>{{ $evento->descripcion }}</h3>
         <h3>{{ count($evento->especies) != 0 ? $evento->especies[0]->nombre : "Sin ninguna especie indicada" }}</h3>
         <h3><strong>Número de participantes: </strong>{{ count($evento->participantes) }}</h3>

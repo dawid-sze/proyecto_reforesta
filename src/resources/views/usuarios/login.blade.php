@@ -20,14 +20,17 @@
             <input type="text" name="password" value="{{ old('password') }}"><br>
             <input class="button" type="submit" value="Iniciar sesión">
         </form>
-        <a href="{{ route('usuarios.create') }}"><button>Registrarse</button></a>
-        <div class="social-login">
-            <a href="{{ route('google.login') }}">
-                <button class="google-btn">
-                    <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png" alt="Logo Google">
-                    Iniciar con Google
-                </button>
-            </a>
+        <div class="botones">
+            <a href="{{ route('usuarios.create') }}"><button>Registrarse</button></a>
+            <div class="social-login">
+                <a href="{{ route('google.login') }}">
+                    <button class="google-btn">
+                        <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png"
+                            alt="Logo Google">
+                        Iniciar con Google
+                    </button>
+                </a>
+            </div>
         </div>
 
     </div>

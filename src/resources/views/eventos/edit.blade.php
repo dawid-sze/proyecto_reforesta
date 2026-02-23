@@ -16,7 +16,7 @@
             @method("PUT")
             <label for="fecha">Fecha del evento: </label>
             <input type="date" name="fecha" id=""
-                value="{{ old('fecha') !== null ? old('fecha') : $evento->fecha }}"><br>
+                value="{{ old('fecha') !== null ? old('fecha') : (new DateTime($evento->fecha))->format('Y-m-d') }}"><br>
             @error('fecha')
                 <span>{{ $message }}</span>
             @enderror
