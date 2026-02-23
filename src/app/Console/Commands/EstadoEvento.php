@@ -23,7 +23,8 @@ class EstadoEvento extends Command
     protected $description = 'Command description';
 
     /**
-     * Execute the console command.
+     * Summary of handle
+     * @return void
      */
     public function handle()
     {

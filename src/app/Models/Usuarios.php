@@ -39,10 +39,18 @@ class Usuarios extends Authenticatable
         ];
     }
 
+    /**
+     * Summary of usuariosEventos
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Eventos, Usuarios, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function usuariosEventos(){
         return $this->belongsToMany(Eventos::class, "usuarios_eventos");
     }
 
+    /**
+     * Summary of hospeda
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Eventos, Usuarios>
+     */
     public function hospeda(){
         return $this->hasMany(Eventos::class, 'anfitrion_id');
     }

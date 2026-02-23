@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Storage;
 class EventosController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Método Index
+     * 
+     * Comprueba si el usuario está logeado. 
+     * Si lo está, carga en los eventos los participantes de cada evento.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -26,7 +31,13 @@ class EventosController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Método Create
+     * 
+     * Comprueba si el usuario está autenticado. 
+     * Si lo está, lo reenvia al formulario de creación. 
+     * En caso contrario, al de logeo.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -38,7 +49,14 @@ class EventosController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Método Store
+     * 
+     * Este método llama a EventosPost para realizar las comprobaciones.
+     * En caso de estar todas correctas, hace un guardado del nuevo evento en la BD y te reenvia a la vista 'show' del evento.
+     * En caso contrario, devuelve automáticamente al formulario con los respectivos mensajes de error.
+     * 
+     * @param EventosPost $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(EventosPost $request)
     {
@@ -66,13 +84,20 @@ class EventosController extends Controller
             'pdf' => $archivoPathPDF,
             'anfitrion_id' => auth()->user()->id
         ]);
-        dump($request->especie);
+       
         $evento->especies()->syncWithoutDetaching([$request->especie]);
+        auth()->user()->increment('karma', 4);
         return redirect()->route('eventos.show', $evento->id);
     }
 
     /**
-     * Display the specified resource.
+     * Método Show
+     * 
+     * Si el usuario está logeado, lo reenviará a la vista de detalles del evento.
+     * En caso contrario, lo reenvía a la vista del formulario de logeo.
+     * 
+     * @param string $id
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(string $id)
     {
@@ -98,7 +123,15 @@ class EventosController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Método Update
+     * 
+     * Utilizando UpdateEventos, realiza las comprobaciones del evento obteniendolo mediante el ID que se le pasa como parámetro.
+     * Además, comprueba si el usuario logeado es el mismo que el anfitrión del evento que, en caso de no serlo, lo reenviará al inicio.
+     * Además del método Update, se realizará la comprobación mediante una ternária de los campos para que en caso de estar vacíos, se queden los anteriores.
+     * 
+     * @param UpdateEventos $request
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateEventos $request, string $id)
     {
@@ -132,7 +165,13 @@ class EventosController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Método Destroy
+     * 
+     * Se comprueba que el usuario esté logeado y tenga el mismo ID que el anfitrión. En caso de no serlo, lo reenvia a inicio.
+     * Si es el dueño del evento, se ejecuta la eliminación del evento.
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {

@@ -15,6 +15,11 @@ button:hover,
     background-color: rgb(253, 192, 116);
 }
 
+.suscribirse,
+.desuscribirse {
+    margin-left: 15px;
+}
+
 .suscribirse:hover {
     background-color: rgb(253, 239, 116);
 }
@@ -30,6 +35,11 @@ section {
     justify-content: flex-start;
     margin-top: 1%;
     width: 90%;
+    margin-left: 15px;
+
+    h1 {
+        margin-left: 0px;
+    }
 
     .infoUserText {
         margin-right: 10px;
@@ -47,6 +57,15 @@ section {
             height: 200px;
         }
     }
+}
+
+
+.infoUser {
+    background-color: white;
+    width: 40%;
+    margin-left: 15px;
+    padding: 15px;
+    border-radius: 5px;
 }
 
 .especie {
@@ -159,20 +178,49 @@ article {
         }
     }
 }
-main{
+
+main {
     margin-top: 5px;
-    .cabeceraEvento{
+
+    .cabeceraEvento {
         display: flex;
         align-items: center;
     }
 }
-.botones{
+
+.botones {
     display: flex;
 }
-.cabeceraEvento{
-    h1{
+
+.cabeceraEvento {
+    display: flex;
+    align-items: center;
+
+    .titulo {
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
         background-color: rgba(255, 228, 196, 0.74);
+        height: max-content;
+        width: calc(10%);
+        min-width: max-content;
+    }
+
+    h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
         width: max-content;
         color: black;
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        color: black;
+        a{
+            color: rgb(54, 54, 54);
+        }
     }
 }

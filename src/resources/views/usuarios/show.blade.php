@@ -20,39 +20,112 @@
                 <h3><strong>Karma: </strong> {{$usuario->karma}}</h3>
             </div>
             <div class="userInfoAvatar">
-                <img class="avatar-show" onerror="this.src='/imagePlaceholder.png'" src="{{ $usuario->avatar}}" alt="Avatar de {{ $usuario->nick }}">
+                <img class="avatar-show" onerror="this.src='/imagePlaceholder.png'" src="{{ $usuario->avatar}}"
+                    alt="Avatar de {{ $usuario->nick }}">
                 @if(auth()->check() && auth()->user()->id == $usuario->id)
                     <a href="{{ $usuario->id }}/edit"><button>Editar avatar</button></a>
                 @endif
             </div>
         </section>
-
-
+        <h1>Eventos en los que es anfitrión</h1>
         <section class="userEvents">
             @foreach ($usuario->hospeda as $evento)
-                <article>
-                    <h1>{{ $evento->nombre }} </h1>
-                    <p>{{ $evento->ubicacion }}</p>
-                    <p>{{ $evento->tipo_evento }}</p>
-                    <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
-                    @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)
-                        <a href="{{ route("eventos.edit", $evento->id) }}"><button>Modificar evento</button></a>
-                        <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
-                            @csrf
-                            @method("DELETE")
-                            <button class="button" type="submit" onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
-                        </form>
-                    @endif
-                </article>
+                    <article>
+                        <div class="cabeceraEvento"
+                            style="color:white;padding:5px;min-height:20%; background-image: url({{ $evento->imagen }}),url('/placeholderEvento.avif'); background-repeat: no-repeat; background-size: cover;">
+                            <div class="titulo">
+                                <h1>{{ $evento->nombre }} </h1>
+                                <h3>Por <a
+                                        href="{{ route('usuarios.show', $evento->anfitrion->id) }}">{{ $evento->anfitrion->nombre }}</a>
+                                </h3>
+                            </div>
+                            <?php 
+                    $participa = false;
+                 ?>
+                            @if(auth()->check())
+                                @foreach ($evento->participantes as $participante)
+                                    @if ($participante->id == auth()->user()->id)
+                                        <?php 
+                                                            $participa = true;
+                                                        ?>
+                                    @endif
+                                @endforeach
+                            @endif()
+                            @if($evento->fecha >= new DateTime('today'))
+
+                                @if($participa)
+                                    <form action="{{ route('signOff', [$evento->id, 1]) }} " method="POST">
+                                        @csrf
+                                        @method('POST')
+                                        <input class="button desuscribirse" type="submit" value="Desuscribirse">
+                                    </form>
+                                @else
+                                    <form action="{{ route('signUp', [$evento->id, 1]) }} " method="POST">
+                                        @csrf
+                                        @method('POST')
+                                        <input class="button desuscribirse" type="submit" value="Suscribirse">
+                                    </form>
+                                @endif
+                            @endif
+                        </div>
+                        <p>{{ $evento->ubicacion }}</p>
+                        <p>{{ $evento->tipo_evento }}</p>
+                        <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
+                        @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)
+                            <a href="{{ route("eventos.edit", $evento->id) }}"><button>Modificar evento</button></a>
+                            <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button class="button" type="submit"
+                                    onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
+                            </form>
+                        @endif
+                    </article>
 
             @endforeach
         </section>
+        <h1>Eventos a los que está suscrito</h1>
         <section class="userSignedEvents">
             @foreach ($usuario->usuariosEventos as $evento)
                 <article>
-                    <h1>{{ $evento->nombre }} </h1>
+                    <div class="cabeceraEvento"
+                        style="color:white;padding:5px;min-height:20%; background-image: url({{ $evento->imagen }}),url('/placeholderEvento.avif'); background-repeat: no-repeat; background-size: cover;">
+                        <div class="titulo">
+                            <h1>{{ $evento->nombre }} </h1>
+                            <h3>Por <a
+                                    href="{{ route('usuarios.show', $evento->anfitrion->id) }}">{{ $evento->anfitrion->nombre }}</a>
+                            </h3>
+                        </div>
+                        <?php 
+                        $participa = false;
+                     ?>
+                        @if(auth()->check())
+                            @foreach ($evento->participantes as $participante)
+                                @if ($participante->id == auth()->user()->id)
+                                    <?php 
+                                                                            $participa = true;
+                                                                        ?>
+                                @endif
+                            @endforeach
+                        @endif()
+                        @if($evento->fecha >= new DateTime('today'))
+
+                            @if($participa)
+                                <form action="{{ route('signOff', [$evento->id, 1]) }} " method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <input class="button desuscribirse" type="submit" value="Desuscribirse">
+                                </form>
+                            @else
+                                <form action="{{ route('signUp', [$evento->id, 1]) }} " method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <input class="button desuscribirse" type="submit" value="Suscribirse">
+                                </form>
+                            @endif
+                        @endif
+                    </div>
                     <p>{{ $evento->ubicacion }}</p>
-                    <!-- Mirar a ver como llamamos el nombre del anfitrion -->
                     <p>{{ $evento->tipo_evento }}</p>
                     <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
                     @if (auth()->check() && auth()->user()->id == $usuario->id)

@@ -56,8 +56,9 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <input class="button" type="submit" value="Registrarse">
-            <div class="social-login">
+        </form>
+        <input class="button" type="submit" value="Registrarse">
+        <div class="social-login">
             <a href="{{ route('google.login') }}">
                 <button class="google-btn">
                     <img width="10px" height="10px" src="https://logopng.com.br/logos/google-37.png" alt="Logo Google">
@@ -65,7 +66,6 @@
                 </button>
             </a>
         </div>
-        </form>
     </div>
 </body>
 
