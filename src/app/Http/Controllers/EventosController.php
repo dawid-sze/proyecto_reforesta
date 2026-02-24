@@ -184,5 +184,10 @@ class EventosController extends Controller
         return redirect()->route('eventos.index');
     }
 
+    public function calendario () {
+        $eventos = Eventos::all();
+        return view('eventos.calendario',compact('eventos'));
+    }
+
 
 }

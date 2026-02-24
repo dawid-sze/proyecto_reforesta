@@ -1,19 +1,53 @@
-<div>
-    <div>
-        <h1>Usuarios</h1>
-   @foreach ($usuarios as $usuario)
-            <article>
-                <h1>{{ $usuario->nombre }} </h1>
-                <!-- Mirar a ver como llamamos el nombre del anfitrion -->
-                 <a href="/usuarios/{{ $usuario->id }}"><button>Ver detalles</button></a>
-                 <a href="/usuarios/{{ $usuario->id }}/edit"><button>Modificar usuario</button></a>
-                 <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST">
-                    @csrf
-                    @method("DELETE")
-                    <button type="submit" onclick="return confirm('Seguro que quieres borrar')">Eliminar</button>
-                 </form>
-            </article> 
-        @endforeach
-</div>
+<!DOCTYPE html>
+<html lang="es">
 
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+    @include('navegacion')
+    <div class="">
+        <div>
+            <div>
+                <?php
+                    $tempUsuarios = $usuarios->all();
+                    usort($tempUsuarios,function($a,$b){
+                        if($a->karma > $b->karma){
+                            return -1;
+                        }else if($a->karma < $b->karma){
+                            return 1;
+                        }else{
+                            return 0;
+                        }
+                    });
+                ?>
+                <h1>Ranking de Karma</h1>
+                <table class="ranking">
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Karma</th>
+                    </tr>
+                    <?php
+                        $cont = 10;
+                        count($tempUsuarios) >= 10?"":$cont = count($tempUsuarios);
+                    ?>
+                    @for ($i = 0; $i < $cont; $i++)
+                    <tr>
+                        <td>#{{ $i+1 }}</td>
+                        <td>{{ $tempUsuarios[$i]->nombre }}</td>
+                        <td>{{ $tempUsuarios[$i]->karma }}</td>
+                    </tr>
+                    @endfor
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
