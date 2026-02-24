@@ -24,7 +24,7 @@ class EventosController extends Controller
         if (auth()->check()) {
             $eventos = Eventos::all()->load(['anfitrion', 'participantes', 'especies']);
         } else {
-            $eventos = Eventos::all()->load(['anfitrion','especies']);
+            $eventos = Eventos::all()->load(['anfitrion', 'especies']);
         }
 
         return view('inicio', compact('eventos'));
@@ -63,13 +63,14 @@ class EventosController extends Controller
         $archivoPathImagen = null;
         $archivoPathPDF = null;
 
-
-        $archivoPathImagen = $request->file('imagen')->store('repositorio_ficheros');
-        $archivoPathImagen = Storage::url($archivoPathImagen);
-
-
-        $archivoPathPDF = $request->file('pdf')->store('repositorio_ficheros');
-        $archivoPathPDF = Storage::url($archivoPathPDF);
+        if ($request->hasFile(key: 'imagen') && $request->imagen != null) {
+            $archivoPathImagen = $request->file('imagen')->store('repositorio_ficheros');
+            $archivoPathImagen = Storage::url($archivoPathImagen);
+        }
+        if ($request->hasFile(key: 'pdf') && $request->pdf != null) {
+            $archivoPathPDF = $request->file('pdf')->store('repositorio_ficheros');
+            $archivoPathPDF = Storage::url($archivoPathPDF);
+        }
 
 
 
@@ -84,8 +85,9 @@ class EventosController extends Controller
             'pdf' => $archivoPathPDF,
             'anfitrion_id' => auth()->user()->id
         ]);
-       
-        $evento->especies()->syncWithoutDetaching([$request->especie]);
+        if ($request->especie != "null") {
+            $evento->especies()->syncWithoutDetaching([$request->especie]);
+        }
         auth()->user()->increment('karma', 4);
         return redirect()->route('eventos.show', $evento->id);
     }
@@ -114,12 +116,13 @@ class EventosController extends Controller
      */
     public function edit(string $id)
     {
-        $evento = Eventos::findOrFail($id);
+        $especies = Especies::all();
+        $evento = Eventos::findOrFail($id)->load(['especies']);
         if (!auth()->check() && auth()->user()->id != $evento->id_anfitrion) {
             return redirect()->route('inicio');
         }
 
-        return view('eventos.edit', compact('evento'));
+        return view('eventos.edit', compact('evento', 'especies'));
     }
 
     /**
@@ -161,6 +164,19 @@ class EventosController extends Controller
             'pdf' => $archivoPathPDF ?: $evento->pdf,
         ]);
 
+        if ($request->especie != "null") {
+            $evento = Eventos::findOrFail($id)->load(['especies']);
+            if (count($evento->especies) > 0) {
+                $evento->especies()->detach($evento->especies[0]->id);
+            }
+            $evento->especies()->syncWithoutDetaching([$request->especie]);
+        } else {
+            $evento = Eventos::findOrFail($id)->load(['especies']);
+            if (count($evento->especies) > 0) {
+                $evento->especies()->detach($evento->especies[0]->id);
+            }
+
+        }
         return redirect()->route('eventos.show', $evento->id);
     }
 
@@ -184,9 +200,10 @@ class EventosController extends Controller
         return redirect()->route('eventos.index');
     }
 
-    public function calendario () {
+    public function calendario()
+    {
         $eventos = Eventos::all();
-        return view('eventos.calendario',compact('eventos'));
+        return view('eventos.calendario', compact('eventos'));
     }
 
 
