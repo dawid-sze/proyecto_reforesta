@@ -2,6 +2,8 @@
    <nav>
       <a href="{{ '/' }}"><button>Inicio</button></a>
       <a href="{{ '/especies' }}"><button>Especies</button></a>
+      <a href="{{ '/usuarios' }}"><button>Ranking</button></a>
+      <a href="{{ '/calendario' }}"><button>Calendario</button></a>
       @if(auth()->check())
          <a href="/logout"><button>Cerrar sesión</button></a>
          <a href="{{ '/eventos/create/' }}"><button>Crear Eventos</button></a>

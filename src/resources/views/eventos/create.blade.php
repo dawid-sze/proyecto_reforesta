@@ -44,13 +44,16 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <label for="descripcion">Descripción del evento: </label>
-            <input type="text" name="descripcion" id="" value="{{ old('descripcion') }}"><br>
+            <label for="descripcion">Descripción del evento: </label><br>
+            <textarea name="descripcion"
+                id="">{{ old('descripcion')}}</textarea><br>
             @error('descripcion')
                 <span>{{ $message }}</span>
             @enderror
             <br>
+            <label for="especie">Especie a plantar:</label>
             <select name="especie" id="especie">
+                <option value="null">Ninguna especie a plantar</option>
                 @foreach ($especies as $especie)
                     <option value="{{ $especie->id }}">{{ $especie->nombre }}</option>
                 @endforeach
