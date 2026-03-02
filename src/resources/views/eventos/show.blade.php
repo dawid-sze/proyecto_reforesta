@@ -24,8 +24,8 @@
             @foreach ($evento->participantes as $participante)
                 @if ($participante->id == auth()->user()->id)
                     <?php 
-                                                                $participa = true;
-                                                            ?>
+                        $participa = true;
+                    ?>
                 @endif
             @endforeach
         @endif()
@@ -58,7 +58,9 @@
             {{ count($evento->especies) != 0 ? $evento->especies[0]->nombre : "Sin ninguna especie indicada" }}</h3>
         <h3><strong>Número de participantes: </strong>{{ count($evento->participantes) }}</h3>
         <div class="botones">
+
             <a href="{{ asset($evento->pdf) }}"><button>Descargar PDF</button></a>
+
             @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)
                 <a href="{{ $evento->id }}/edit"><button>Editar evento</button></a>
                 <form action="{{ route('eventos.destroy', $evento->id) }}" method="POST">
