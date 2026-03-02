@@ -41,14 +41,14 @@
                                 </h3>
                             </div>
                             <?php 
-                            $participa = false;
-                         ?>
+                                    $participa = false;
+                                 ?>
                             @if(auth()->check())
                                 @foreach ($evento->participantes as $participante)
                                     @if ($participante->id == auth()->user()->id)
                                         <?php 
-                                                                                            $participa = true;
-                                                                                        ?>
+                                                                                                                            $participa = true;
+                                                                                                                        ?>
                                     @endif
                                 @endforeach
                             @endif()
@@ -68,9 +68,12 @@
                                     </form>
                                 @endif
                             @endif
-                        </div>
-                        <p>{{ $evento->ubicacion }}</p>
-                        <p>{{ $evento->tipo_evento }}</p>
+                        </div class="infoEvento">
+                        <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
+                        <h3><strong>Tipo de Evento: </strong>{{ $evento->tipo_evento }}</h3>
+                        <h3><strong>Fecha del evento: </strong>{{ ($evento->fecha)->format('d/m/Y')}}</h3>
+                        <h4><strong>Estado:
+                            </strong>{{ $evento->fecha >= new DateTime('today') ? "Abierto" : "Finalizado" }}</h4>
                         <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
                         @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)
                             <a href="{{ route("eventos.edit", $evento->id) }}"><button>Modificar evento</button></a>
@@ -98,14 +101,14 @@
                                 </h3>
                             </div>
                             <?php 
-                                $participa = false;
-                             ?>
+                                        $participa = false;
+                                     ?>
                             @if(auth()->check())
                                 @foreach ($evento->participantes as $participante)
                                     @if ($participante->id == auth()->user()->id)
                                         <?php 
-                                                                                                            $participa = true;
-                                                                                                        ?>
+                                                                                                                                            $participa = true;
+                                                                                                                                        ?>
                                     @endif
                                 @endforeach
                             @endif()
@@ -125,9 +128,12 @@
                                     </form>
                                 @endif
                             @endif
-                        </div>
-                        <p>{{ $evento->ubicacion }}</p>
-                        <p>{{ $evento->tipo_evento }}</p>
+                        </div class="infoEvento">
+                        <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
+                        <h3><strong>Tipo de Evento: </strong>{{ $evento->tipo_evento }}</h3>
+                        <h3><strong>Fecha del evento: </strong>{{ ($evento->fecha)->format('d/m/Y')}}</h3>
+                        <h4><strong>Estado:
+                            </strong>{{ $evento->fecha >= new DateTime('today') ? "Abierto" : "Finalizado" }}</h4>
                         <a href="{{ route("eventos.show", $evento->id) }}"><button>Ver detalles</button></a>
                         @if (auth()->check() && auth()->user()->id == $usuario->id)
 

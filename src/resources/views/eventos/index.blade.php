@@ -39,11 +39,10 @@
                         @endif
                     @endif
                 </div>
-
                 <h3><strong>Ubicación: </strong>{{ $evento->ubicacion }}</h3>
                 <h3><strong>Tipo de Evento: </strong>{{ $evento->tipo_evento }}</h3>
                 <h3><strong>Fecha del evento: </strong>{{ ($evento->fecha)->format('d/m/Y')}}</h3>
-                <h4><strong>Estado: </strong>{{ $evento->estado_evento == 0 ? "Abierto" : "Finalizado" }}</h4>
+                <h4><strong>Estado: </strong>{{ $evento->fecha >= new DateTime('today') ? "Abierto" : "Finalizado" }}</h4>
                 <div class="botones">
                     <a href="eventos/ {{ $evento->id }}"><button>Ver detalles</button></a>
                     @if (auth()->check() && auth()->user()->id == $evento->anfitrion_id)

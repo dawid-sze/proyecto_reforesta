@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventosPost extends FormRequest
+class ApiEventosPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,24 +21,19 @@ class EventosPost extends FormRequest
      */
     public function rules(): array
     {
-       
-        return [
+         return [
             'nombre'=> 'required|string|max:50',
             'tipo_evento'=> 'string|max:50',
             'tipo_terreno'=> 'string|max:50',
             'ubicacion'=> 'string|max:70',
             'fecha' => 'required|date|after:today',
             'descripcion' => 'string|max:300',
-            'imagen' => 'sometimes|max:10000|mimes:jpeg,jpg,png,webp,svg',
-            'pdf' => 'sometimes|max:10000|mimes:pdf',
+            'imagen' => 'max:10000',
+            'pdf' => 'max:10000',
         ];
     }
 
-    /**
-     * Summary of messages
-     * @return array{descripcion: string, fecha.after: string, fecha.requiered: string, imagen.mimes: string, nombre.max: string, nombre.required: string, pdf.mimes: string, tipo_evento.max: string, tipo_terreno.max: string, ubicacion.max: string}
-     */
-    public function messages() {
+     public function messages() {
         return [
             'nombre.required' => 'El nombre es obligatorio',
             'nombre.max' => 'El nombre no puede superar los 20 carácteres',
@@ -48,8 +43,8 @@ class EventosPost extends FormRequest
             'fecha.requiered' => 'La fecha es un campo obligatorio',
             'fecha.after' => 'La fecha del evento tiene que ser posterior a hoy',
             'descripcion' => 'La descripcion no puede superar los 300 carácteres',
-            'imagen.mimes' => 'La imagen tiene que cumplir con los siguientes formatos jpeg,jpg,png,webp,svg',
-            'pdf.mimes' => 'Solo se permite el formato PDF'
+            'imagen.max' => 'La URL es demasiado larga',
+            'pdf.max' => 'La URL es demasiado larga'
         ];
     }
 }

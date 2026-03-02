@@ -17,6 +17,7 @@
             <label for="email">Email:</label>
             <input type="text" name="email" value="{{ old('email') }}"><br>
             <label for="password">Contraseña:</label>
+            
             <input type="text" name="password" value="{{ old('password') }}"><br>
             <input class="button" type="submit" value="Iniciar sesión">
         </form>
