@@ -28,6 +28,18 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
+            <label for="especie">Especie a plantar:</label>
+            <select name="especie" id="especie">
+                <option value="null">Ninguna especie a plantar</option>
+                @foreach ($especies as $especie)
+                    @if(count($evento->especies) > 0 && $especie->id == $evento->especies[0]->id)
+                        <option selected value="{{ $especie->id }}">{{ $especie->nombre }}</option>
+                    @else()
+                        <option value="{{ $especie->id }}">{{ $especie->nombre }}</option>
+                    @endif()
+                @endforeach
+            </select>
+            <br>
             <label for="imagen">Imagen del evento:</label>
             <input type="file" name="imagen" id=""
                 value="{{ old('imagen') !== null ? old('imagen') : $evento->imagen }}"><br>

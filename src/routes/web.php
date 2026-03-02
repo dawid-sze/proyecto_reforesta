@@ -18,6 +18,7 @@ Route::post('login', [UsuariosController::class, 'login'])->name('login');
 Route::get('logout', [UsuariosController::class, 'logout'])->name('logout');
 Route::post('signUp/{id}/{show}', [UsuariosController::class, 'signUp'])->name('signUp');
 Route::post('signOff/{id}/{show}', [UsuariosController::class, 'signOff'])->name('signOff');
+Route::get('calendario', [EventosController::class, 'calendario'])->name('calendario');
 
 
 

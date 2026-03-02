@@ -29,8 +29,8 @@ class EventosPost extends FormRequest
             'ubicacion'=> 'string|max:70',
             'fecha' => 'required|date|after:today',
             'descripcion' => 'string|max:300',
-            'imagen' => 'max:10000|mimes:jpeg,jpg,png,webp,svg',
-            'pdf' => 'max:10000|mimes:pdf',
+            'imagen' => 'sometimes|max:10000|mimes:jpeg,jpg,png,webp,svg',
+            'pdf' => 'sometimes|max:10000|mimes:pdf',
         ];
     }
 
