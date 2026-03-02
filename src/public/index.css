@@ -273,3 +273,34 @@ main {
 .ranking tbody tr:nth-child(2):hover { background: #fdebaf; } 
 .ranking tbody tr:nth-child(3):hover { background: #cacaca9d; }
 .ranking tbody tr:nth-child(4):hover { background: #ffc6a4; } 
+
+
+
+.infoEvento{
+    background-color: rgba(245, 245, 245, 0.479);
+    padding: 1%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    
+    h1,h2,h3,h4 {
+        margin: 0;
+        padding: 0;
+        font-weight: 500;
+    }
+    h3,h4{
+        margin-bottom: 15px;
+    }
+    strong{
+        font-weight: bold;
+        margin: 0;
+    }
+    h4{
+        width: 60%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    .botones{
+        display: flex;
+    }
+}

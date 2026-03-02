@@ -39,7 +39,7 @@
                     @for ($i = 0; $i < $cont; $i++)
                     <tr>
                         <td>#{{ $i+1 }}</td>
-                        <td>{{ $tempUsuarios[$i]->nombre }}</td>
+                        <td><a href="/usuarios/{{ $tempUsuarios[$i]->id }}">{{ $tempUsuarios[$i]->nombre }}</a></td>
                         <td>{{ $tempUsuarios[$i]->karma }}</td>
                     </tr>
                     @endfor
