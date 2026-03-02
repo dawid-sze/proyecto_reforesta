@@ -32,7 +32,8 @@ class ApiEventosUpdate extends FormRequest
     public function messages() {
         return [
             'fecha.after' => 'La fecha del evento tiene que ser posterior a hoy',
-            'descripcion' => 'La descripcion no puede superar los 300 carácteres',
+            'descripcion.max' => 'La descripcion no puede superar los 300 carácteres',
+            'descripcion.string' => 'La descripción no puede estar vacía',
             'imagen.max' => 'La URL es demasiado larga',
             'pdf.max' => 'La URL es demasiado larga'
         ];

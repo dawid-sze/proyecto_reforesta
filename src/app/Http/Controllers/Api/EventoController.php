@@ -11,6 +11,7 @@ use App\Models\Usuarios;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\ApiEventosUpdate;
 
 class EventoController extends Controller
 {
@@ -44,9 +45,9 @@ class EventoController extends Controller
             'pdf' => $request->pdf,
             'anfitrion_id' => $usuario->id
         ]);
-       
-        $evento->especies()->syncWithoutDetaching([$especie->id]);
-
+       if ($request->especie != "") {
+            $evento->especies()->syncWithoutDetaching([$request->especie]);
+        }
         return response()->json($evento, 202);
 
     }
@@ -65,21 +66,32 @@ class EventoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ApiEventosUpdate $request, string $id)
     {
-        $usuario = Usuarios::findOrFail($request->anfitrion_id);
-        $especie = Especies::findOrFail($request->id_especie);
+        $especie = Especies::findOrFail($request->especie_id);
         $evento = Eventos::findOrFail($id);
          $evento->update([
-            'nombre' => $request->nombre != "" ? $request->nombre : $evento->nombre,
-            'tipo_evento' => $request->tipo_evento != "" ? $request->tipo_evento : $evento->tipo_evento,
-            'tipo_terreno' => $request->tipo_terreno != "" ? $request->tipo_terreno : $evento->tipo_terreno,
-            'ubicacion' => $request->ubicacion != "" ? $request->ubicacion : $evento->ubicacion,
             'fecha' => $request->fecha > new DateTime('today') ? $request->fecha : $evento->fecha,
             'descripcion' => $request->descripcion != "" ? $request->descripcion : $evento->descripcion,
             'imagen' => $request->imagen ?: $evento->imagen,
             'pdf' => $request->pdf ?: $evento->pdf
         ]);
+
+         if ($especie != "") {
+            $evento = Eventos::findOrFail($id)->load(['especies']);
+            if (count($evento->especies) > 0) {
+                $evento->especies()->detach($evento->especies[0]->id);
+            }
+            $evento->especies()->syncWithoutDetaching([$request->especie_id]);
+        } else {
+            $evento = Eventos::findOrFail($id)->load(['especies']);
+            if (count($evento->especies) > 0) {
+                $evento->especies()->detach($evento->especies[0]->id);
+            }
+
+        }
+
+         return response()->json($evento, 202);
     }
 
     /**
@@ -87,6 +99,9 @@ class EventoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $evento = Eventos::findOrFail($id);
+        $evento->delete();
+
+        return response()->json($evento,201);
     }
 }
