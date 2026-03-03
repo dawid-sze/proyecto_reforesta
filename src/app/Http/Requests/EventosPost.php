@@ -27,12 +27,17 @@ class EventosPost extends FormRequest
             'tipo_evento'=> 'string|max:50',
             'tipo_terreno'=> 'string|max:50',
             'ubicacion'=> 'string|max:70',
-            'date' => 'required|date|after:today',
+            'fecha' => 'required|date|after:today',
             'descripcion' => 'string|max:300',
-            'imagen' => 'max:10000|mimes:jpeg,jpg,png,webp,svg'
+            'imagen' => 'sometimes|max:10000|mimes:jpeg,jpg,png,webp,svg',
+            'pdf' => 'sometimes|max:10000|mimes:pdf',
         ];
     }
 
+    /**
+     * Summary of messages
+     * @return array{descripcion: string, fecha.after: string, fecha.requiered: string, imagen.mimes: string, nombre.max: string, nombre.required: string, pdf.mimes: string, tipo_evento.max: string, tipo_terreno.max: string, ubicacion.max: string}
+     */
     public function messages() {
         return [
             'nombre.required' => 'El nombre es obligatorio',
@@ -40,11 +45,11 @@ class EventosPost extends FormRequest
             'tipo_evento.max' => 'El tipo del evento no puede superar los 50 carácteres',
             'tipo_terreno.max' => 'El tipo de terreno no puede superar los 50 carácteres',
             'ubicacion.max' => 'La ubicacion no puede superar los 70 carácteres',
-            'date.requiered' => 'La fecha es un campo obligatorio',
-            'date.after' => 'La fecha del evento tiene que ser posterior a hoy',
+            'fecha.requiered' => 'La fecha es un campo obligatorio',
+            'fecha.after' => 'La fecha del evento tiene que ser posterior a hoy',
             'descripcion' => 'La descripcion no puede superar los 300 carácteres',
-            'imagen.max' => 'La imagen no puede superar los 10000 carácteres',
-            'imagen.mimes' => 'La imagen tiene que cumplir con los siguientes formatos jpeg,jpg,png,webp,svg'
+            'imagen.mimes' => 'La imagen tiene que cumplir con los siguientes formatos jpeg,jpg,png,webp,svg',
+            'pdf.mimes' => 'Solo se permite el formato PDF'
         ];
     }
 }

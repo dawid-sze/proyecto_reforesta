@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('anfitrion_id')->constrained('usuarios')->onDelete('cascade');
             $table->string('descripcion',300)->nullable();
             $table->string('imagen',300)->nullable();
+            $table->string('pdf',300)->nullable();
+            $table->boolean('estado_evento')->default(false);
             $table->timestamp('fecha_creacion')->useCurrent();
         });
     }

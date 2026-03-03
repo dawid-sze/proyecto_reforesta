@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
+<body class="bodyForm">
     @include('navegacion')
-    <div>
-        <form action="{{ route('eventos.store') }}" method="POST">
+    <div class="formulario">
+        <form action="{{ route('eventos.store') }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('POST')
             <label for="nombre">Nombre del evento:</label>
@@ -44,11 +44,20 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <label for="descripcion">Descripción del evento: </label>
-            <input type="text" name="descripcion" id="" value="{{ old('descripcion') }}"><br>
+            <label for="descripcion">Descripción del evento: </label><br>
+            <textarea name="descripcion"
+                id="">{{ old('descripcion')}}</textarea><br>
             @error('descripcion')
                 <span>{{ $message }}</span>
             @enderror
+            <br>
+            <label for="especie">Especie a plantar:</label>
+            <select name="especie" id="especie">
+                <option value="null">Ninguna especie a plantar</option>
+                @foreach ($especies as $especie)
+                    <option value="{{ $especie->id }}">{{ $especie->nombre }}</option>
+                @endforeach
+            </select>
             <br>
             <label for="imagen">Imagen del evento:</label>
             <input type="file" name="imagen" id="" value="{{ old('imagen') }}"><br>
@@ -56,7 +65,13 @@
                 <span>{{ $message }}</span>
             @enderror
             <br>
-            <input type="submit" value="Crear evento">
+            <label for="pdf">PDF del evento:</label>
+            <input type="file" name="pdf" id="" value="{{ old('pdf') }}"><br>
+            @error('pdf')
+                <span>{{ $message }}</span>
+            @enderror
+            <br>
+            <input class="button" type="submit" value="Crear evento">
         </form>
     </div>
 </body>

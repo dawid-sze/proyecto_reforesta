@@ -2,6 +2,8 @@
    <nav>
       <a href="{{ '/' }}"><button>Inicio</button></a>
       <a href="{{ '/especies' }}"><button>Especies</button></a>
+      <a href="{{ '/usuarios' }}"><button>Ranking</button></a>
+      <a href="{{ '/calendario' }}"><button>Calendario</button></a>
       @if(auth()->check())
          <a href="/logout"><button>Cerrar sesión</button></a>
          <a href="{{ '/eventos/create/' }}"><button>Crear Eventos</button></a>
@@ -12,8 +14,7 @@
       @endif
    </nav>
    @if(auth()->check())
-      <a class="userAvatar" href="{{ route('usuarios.show', auth()->user()->id)}}"><img src="{{ auth()->user()->avatar }}"
-         onerror="this.src='/imagePlaceholder.png'"  
-         alt="Avatar de {{ auth()->user()->nick }}"></a>
+      <a class="userAvatar" href="{{ route('usuarios.show', auth()->user()->id)}}"><img src="{{  auth()->user()->avatar}}"
+            onerror="this.src='/imagePlaceholder.png'" alt="Avatar de {{ auth()->user()->nick }}"></a>
    @endif
 </div>
