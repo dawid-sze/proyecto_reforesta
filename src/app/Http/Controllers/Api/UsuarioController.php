@@ -17,6 +17,7 @@ class UsuarioController extends Controller
     {
         $usuarios = Usuarios::select('id','nick','nombre','apellidos','email','karma','avatar')->get();
         $usuarios = $usuarios->load(['hospeda','usuariosEventos']);
+
         return response()->json($usuarios,202);
     }
 

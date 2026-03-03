@@ -21,6 +21,7 @@ class EventoController extends Controller
     public function index()
     {
         $eventos = Eventos::select('id','nombre', 'tipo_evento', 'tipo_terreno', 'ubicacion', 'fecha', 'descripcion', 'imagen', 'pdf', 'anfitrion_id', 'estado_evento')->get();
+
         $eventos = $eventos->load(['anfitrion','especies']);
         return response()->json($eventos,202);
     }
@@ -58,6 +59,7 @@ class EventoController extends Controller
     public function show(string $id)
     {
         $evento = Eventos::select('id','nombre', 'tipo_evento', 'tipo_terreno', 'ubicacion', 'fecha', 'descripcion', 'imagen', 'pdf', 'anfitrion_id', 'estado_evento')->where('id', '=' , $id)->get();
+
         $evento = $evento->load(['anfitrion','especies']);
         return response()->json($evento, 202);
     }
