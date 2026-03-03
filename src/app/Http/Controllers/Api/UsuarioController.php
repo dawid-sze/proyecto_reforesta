@@ -16,11 +16,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuarios::select('id','nick','nombre','apellidos','email','karma','avatar')->get();
-<<<<<<< HEAD
-
-=======
         $usuarios = $usuarios->load(['hospeda','usuariosEventos']);
->>>>>>> master
         return response()->json($usuarios,202);
     }
 
@@ -50,10 +46,7 @@ class UsuarioController extends Controller
     public function show(string $id)
     {
         $usuario = Usuarios::select('id','nick','nombre','apellidos','email','karma','avatar')->where('id', '=',$id)->get();
-<<<<<<< HEAD
-=======
         $usuario = $usuario->load(['hospeda','usuariosEventos']);
->>>>>>> master
 
         return response()->json($usuario,202);
     }
