@@ -6,6 +6,10 @@ use App\Models\Usuarios;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\Api\UsuarioController as UsuarioApiController;
+>>>>>>> master
 
 Route::get('/', [EventosController::class, 'index'])->name('inicio');
 
@@ -19,6 +23,14 @@ Route::post('signUp/{id}/{show}', [UsuariosController::class, 'signUp'])->name('
 Route::post('signOff/{id}/{show}', [UsuariosController::class, 'signOff'])->name('signOff');
 Route::get('calendario', [EventosController::class, 'calendario'])->name('calendario');
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> master
 Route::get('/auth/google', function () {
     return Socialite::driver('google')->redirect();
 })->name('google.login');
